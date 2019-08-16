@@ -538,9 +538,9 @@ input[type="submit"] {
     background-color: #d9e4ea;
   }
 
-  .confirm-session{
+  .confirm{
     float:left;
 }
-.reject{
+.reject-session{
     float:right;
 }
