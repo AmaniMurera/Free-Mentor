@@ -7,3 +7,5 @@ const router = express.Router();
 const user_controller = new UserController();
 // signup endpoint
 router.post('/auth/signup', user_controller.signUp);
+// signin endpoint
+router.post('/auth/signin', user_controller.signIn);
