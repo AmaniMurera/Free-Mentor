@@ -16,3 +16,5 @@ router.get('/users', authorisation.checkAdmin, user_controller.GetAllUsers);
 router.get('/users/:id', authorisation.checkAdmin, user_controller.GetSpecificUser);
 // admin can delete a user
 router.delete('/user/:id', authorisation.checkAdmin, user_controller.deleteUser);
+// admin can change user to a mentor
+router.patch('/user/:id', authorisation.checkAdmin, user_controller.ChangeToMentor);
