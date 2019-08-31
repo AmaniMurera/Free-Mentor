@@ -284,3 +284,179 @@ describe('user can get all mentors with invalid token', () => {
         });
     });
   });
+
+
+  describe('request session', () => {
+    it('should not be able to request session when user does not provide token', (done) => {
+      chai.request(app)
+        .post('/api/v1/sessions')
+        .send({
+   mentorId: 3,
+          questions: 'ffffffffffffffff',
+        })
+  
+        .set('authorisation', ' ')
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          res.body.should.be.a('object');
+          res.body.should.have.property('status');
+          res.body.should.have.property('error');
+          done();
+        });
+    });
+  
+    it('should not be able to request session when a user does not exist', (done) => {
+      chai.request(app)
+        .post('/api/v1/sessions')
+        .send({
+          mentorId: 4,
+          questions: 'ffffffffff ',
+        })
+        .set('Accept', 'application/json')
+        .set('authorisation', expired_token)
+        .end((err, res) => {
+          expect(res.body).to.be.an('object');
+          expect(res.body.error).to.be.equal('The User does not exist.');
+          done();
+        });
+    });
+    it('should not be able to request a mentorship session when mentorId field is empty', (done) => {
+      chai.request(app)
+        .post('/api/v1/sessions')
+        .send({
+          mentorId: '',
+          questions: 'ffffffffff ',
+        })
+        .set('Accept', 'application/json')
+        .set('authorisation', menteeToken)
+        .end((err, res) => {
+          res.body.should.be.a('object');
+          res.body.should.have.property('status');
+          res.body.should.have.property('error');
+          done();
+        });
+    });
+    it('should not be able to request a mentorship session when questions field is empty', (done) => {
+      chai.request(app)
+        .post('/api/v1/sessions')
+        .send({
+          mentorId: 'fffffffffff',
+          questions: '',
+        })
+        .set('Accept', 'application/json')
+        .set('authorisation', menteeToken)
+        .end((err, res) => {
+          res.body.should.be.a('object');
+          res.body.should.have.property('status');
+          res.body.should.have.property('error');
+          done();
+        });
+    });
+    it('should not be able to request a mentorship session when mentorId is incorrect', (done) => {
+      chai.request(app)
+        .post('/api/v1/sessions')
+        .send({
+          mentorId: 400,
+          questions: 'fffffff',
+        })
+        .set('Accept', 'application/json')
+        .set('authorisation', menteeToken)
+        .end((err, res) => {
+          res.body.should.be.a('object');
+          res.body.should.have.property('status');
+          res.body.should.have.property('error');
+          done();
+        });
+    });
+    it('should not be able to request a mentorship session when mentorId is incorrect', (done) => {
+      chai.request(app)
+        .post('/api/v1/sessions')
+        .send({
+          mentorId: 400,
+          questions: 'fffffff',
+        })
+        .set('Accept', 'application/json')
+        .set('authorisation', menteeToken)
+        .end((err, res) => {
+          res.body.should.be.a('object');
+          res.body.should.have.property('status');
+          res.body.should.have.property('error');
+          done();
+        });
+    });
+    it('should not be able to request a mentorship session when a mentee does not send a token is request headers', (done) => {
+      chai.request(app)
+        .post('/api/v1/sessions')
+        .send({
+          mentorId: 400,
+          questions: 'fffffff',
+        })
+        .set('Accept', 'application/json')
+        .set('authorisation', '')
+        .end((err, res) => {
+          res.body.should.be.a('object');
+          res.body.should.have.property('status');
+          res.body.should.have.property('error');
+          done();
+        });
+    });
+    it('should  be able to request a mentorship session when all deatails are correct', (done) => {
+      chai.request(app)
+        .post('/api/v1/sessions')
+        .send({
+          mentorId: 4,
+          questions: 'fffffff',
+        })
+        .set('Accept', 'application/json')
+        .set('authorisation', menteeToken)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('status');
+          res.body.should.have.property('data');
+          res.body.should.have.property('data').to.be.an('object');
+  
+          done();
+        });
+    });
+  });
+
+  describe('mentor can view all mentorship request sessions created against him', () => {
+    it('should not be able view all mentorship request sessions when a mentor does not provide token', (done) => {
+      chai.request(app)
+        .get('/api/v1/sessions')
+        .set('authorisation', ' ')
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          res.body.should.be.a('object');
+          res.body.should.have.property('status');
+          res.should.have.status(401);
+          res.body.should.have.property('error');
+          done();
+        });
+    });
+    it('should not be able view all mentorship request sessions when a mentor  provide token ivalid token', (done) => {
+      chai.request(app)
+        .get('/api/v1/sessions')
+        .set('authorisation', invalidToken)
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          res.body.should.be.a('object');
+          res.body.should.have.property('status');
+          res.body.should.have.property('error');
+          done();
+        });
+    });
+    it('should not be able view all mentorship request sessions when a mentor does not exist', (done) => {
+      chai.request(app)
+        .get('/api/v1/sessions')
+        .set('authorisation', expired_token)
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          res.body.should.be.a('object');
+          res.body.should.have.property('status');
+          res.body.should.have.property('error');
+          done();
+        });
+    });
+  
