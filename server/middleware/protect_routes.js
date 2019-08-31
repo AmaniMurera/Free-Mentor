@@ -96,7 +96,6 @@ class Authorisation {
       );
     }
   }
-
 }
 
 export default Authorisation;
