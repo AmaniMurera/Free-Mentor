@@ -204,3 +204,83 @@ describe('change into mentor a user who is already a mentor ', () => {
         });
     });
   });
+  // 8. user try to get all mentors with invalid token
+describe('user can get all mentors with invalid token', () => {
+    it('should return invalid token', (done) => {
+      chai.request(app)
+        .get('/api/v1/mentors')
+  
+        .set('authorisation', invalidToken)
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('error');
+          done();
+        });
+    });
+  });
+  
+  describe('user try to get all mentors when he does not send his token in request headers', () => {
+    it('should return invalid token', (done) => {
+      chai.request(app)
+        .get('/api/v1/mentors')
+  
+        .set('authorisation', ' ')
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error');
+          done();
+        });
+    });
+  });
+  // 8. user get all mentors when he send an expired token
+  describe('user get all mentors when he send an expired token in request headers', () => {
+    it('should return invalid token', (done) => {
+      chai.request(app)
+        .get('/api/v1/mentors')
+  
+        .set('authorisation', expired_token)
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error');
+          done();
+        });
+    });
+  });
+  // 8. user get a specific mentor
+  describe('user get a specific mentor', () => {
+    it('should return details of a specific mentor', (done) => {
+      chai.request(app)
+        .get('/api/v1/mentors/4')
+  
+        .set('authorisation', menteeToken)
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('data').to.be.an('object');
+          done();
+        });
+    });
+  });
+  // 8. user try to get a mentor who does not exist in the system
+  describe('user get a unexisted mentor', () => {
+    it('should return such mentor does not exist', (done) => {
+      chai.request(app)
+        .get('/api/v1/mentors/100')
+  
+        .set('authorisation', menteeToken)
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          res.body.should.be.a('object');
+          res.body.should.have.property('status');
+          res.body.should.have.property('error');
+          done();
+        });
+    });
+  });
