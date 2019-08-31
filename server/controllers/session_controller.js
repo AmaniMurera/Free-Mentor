@@ -28,6 +28,7 @@ class SessionController {
     }
     return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: `${result.error.details[0].message}` });
   }
+
   mentorViewAllSessionRequests(req, res) {
     const sessionRequests = Session.sessions.filter((session) => session.mentorId === userInfo(res, req.headers.authorisation));
     if (sessionRequests.length < 1) {
@@ -68,7 +69,7 @@ class SessionController {
       });
     }
     const sessionRequest = sessionRequests.filter((el) => el.sessionId == sessionId2);
-  
+
 
     if (sessionRequest.length < 1) { return res.status(404).send({ status: 404, error: 'session not found' }); }
     return res.status(200).send({
@@ -76,13 +77,23 @@ class SessionController {
       data: sessionRequest,
     });
   }
+
   acceptSession = (req, res) => {
     if (isNaN(req.params.id.trim())) {
       return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: 'Session id should be an integer' });
     }
-    
+
     const result = Session.accept(res, req.params.id);
     return res.status(200).send({ status: 200, data: { data: result } });
   }
+
+  // reject session
+ rejectSession = (req, res) => {
+   if (isNaN(req.params.id.trim())) {
+     return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: 'Session id should be an integer' });
+   }
+   const result = Session.reject(res, req.params.id);
+   return res.status(200).send({ status: 200, data: { data: result } });
+ }
 }
 export default SessionController;

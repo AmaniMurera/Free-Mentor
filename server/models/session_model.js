@@ -47,6 +47,7 @@ class Session {
     };
     return newSession;
   };
+
   // accept session
   accept = (res, id) => {
     const session = this.sessions.find((sid) => sid.sessionId === parseInt(id, 10));
@@ -73,7 +74,24 @@ class Session {
     return session;
   }
 
-
-
+  // reject sessions
+  reject = (res, id) => {
+    const session = this.sessions.find((sid) => sid.sessionId === parseInt(id, 10));
+    if (!session) return res.status(404).send({ status: 404, error: 'this session  is not found!' });
+    if (session.status === 'Accept') {
+      return res.status(status.FORBIDDEN).send({
+        status: status.FORBIDDEN,
+        error: 'This session is already accepted',
+      });
+    }
+    if (session.status === 'Reject') {
+      return res.status(status.FORBIDDEN).send({
+        status: status.FORBIDDEN,
+        error: 'This session is already rejected',
+      });
+    }
+    session.status = 'Reject';
+    return session;
+  }
 }
 export default new Session();

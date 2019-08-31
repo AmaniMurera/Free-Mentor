@@ -291,7 +291,7 @@ describe('request session', () => {
     chai.request(app)
       .post('/api/v1/sessions')
       .send({
- mentorId: 3,
+        mentorId: 3,
         questions: 'ffffffffffffffff',
       })
 
@@ -540,90 +540,90 @@ describe('mentor can view a specific mentorship request session created against 
   });
 });
 describe('mentor can accept mentorship request session ', () => {
-    it('should be able to accept mentorship request session created against him', (done) => {
-      chai.request(app)
-        .patch('/api/v1/sessions/1/accept')
-        .set('authorisation', mentorToken)
-        .set('Accept', 'application/json')
-        .end((err, res) => {
-          expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('data').to.be.a('object');
-          done();
-        });
-    });
-    it('should not be able to accept mentorship request session which is already accepted', (done) => {
-      chai.request(app)
-        .patch('/api/v1/sessions/1/accept')
-        .set('authorisation', mentorToken)
-        .set('Accept', 'application/json')
-        .end((err, res) => {
-          expect(res.body).to.be.an('object');
-          res.body.should.have.property('status');
-          res.body.should.have.property('error');
-          done();
-        });
-    });
-    it('should not be able to accept mentorship request session which is not does not exist', (done) => {
-      chai.request(app)
-        .patch('/api/v1/sessions/1000/accept')
-        .set('authorisation', mentorToken)
-        .set('Accept', 'application/json')
-        .end((err, res) => {
-          expect(res.body).to.be.an('object');
-          res.body.should.have.property('status');
-          res.body.should.have.property('error');
-          done();
-        });
-    });
+  it('should be able to accept mentorship request session created against him', (done) => {
+    chai.request(app)
+      .patch('/api/v1/sessions/1/accept')
+      .set('authorisation', mentorToken)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('data').to.be.a('object');
+        done();
+      });
   });
-  describe('mentor can reject mentorship request session ', () => {
-    it('should be able to reject mentorship request session created against him', (done) => {
-      chai.request(app)
-        .patch('/api/v1/sessions/2/reject')
-        .set('authorisation', mentorToken)
-        .set('Accept', 'application/json')
-        .end((err, res) => {
-          expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('data').to.be.a('object');
-          res.body.should.have.property('status');
-          done();
-        });
-    });
-    it('should not be able to reject mentorship request session which is already rejected', (done) => {
-      chai.request(app)
-        .patch('/api/v1/sessions/2/reject')
-        .set('authorisation', mentorToken)
-        .set('Accept', 'application/json')
-        .end((err, res) => {
-          expect(res.body).to.be.an('object');
-          res.body.should.have.property('status');
-          res.body.should.have.property('error');
-          done();
-        });
-    });
-    it('should not be able to reject mentorship request session which is already accepted', (done) => {
-      chai.request(app)
-        .patch('/api/v1/sessions/1/reject')
-        .set('authorisation', mentorToken)
-        .set('Accept', 'application/json')
-        .end((err, res) => {
-          expect(res.body).to.be.an('object');
-          res.body.should.have.property('status');
-          res.body.should.have.property('error');
-          done();
-        });
-    });
-    it('should not be able to reject mentorship request session which is not does not exist', (done) => {
-      chai.request(app)
-        .patch('/api/v1/sessions/1000/reject')
-        .set('authorisation', mentorToken)
-        .set('Accept', 'application/json')
-        .end((err, res) => {
-          expect(res.body).to.be.an('object');
-          res.body.should.have.property('status');
-          res.body.should.have.property('error');
-          done();
-        });
-    });
+  it('should not be able to accept mentorship request session which is already accepted', (done) => {
+    chai.request(app)
+      .patch('/api/v1/sessions/1/accept')
+      .set('authorisation', mentorToken)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
+        res.body.should.have.property('status');
+        res.body.should.have.property('error');
+        done();
+      });
   });
-  
+  it('should not be able to accept mentorship request session which is not does not exist', (done) => {
+    chai.request(app)
+      .patch('/api/v1/sessions/1000/accept')
+      .set('authorisation', mentorToken)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
+        res.body.should.have.property('status');
+        res.body.should.have.property('error');
+        done();
+      });
+  });
+});
+describe('mentor can reject mentorship request session ', () => {
+  it('should be able to reject mentorship request session created against him', (done) => {
+    chai.request(app)
+      .patch('/api/v1/sessions/2/reject')
+      .set('authorisation', mentorToken)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('data').to.be.a('object');
+        res.body.should.have.property('status');
+        done();
+      });
+  });
+  it('should not be able to reject mentorship request session which is already rejected', (done) => {
+    chai.request(app)
+      .patch('/api/v1/sessions/2/reject')
+      .set('authorisation', mentorToken)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
+        res.body.should.have.property('status');
+        res.body.should.have.property('error');
+        done();
+      });
+  });
+  it('should not be able to reject mentorship request session which is already accepted', (done) => {
+    chai.request(app)
+      .patch('/api/v1/sessions/1/reject')
+      .set('authorisation', mentorToken)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
+        res.body.should.have.property('status');
+        res.body.should.have.property('error');
+        done();
+      });
+  });
+  it('should not be able to reject mentorship request session which is not does not exist', (done) => {
+    chai.request(app)
+      .patch('/api/v1/sessions/1000/reject')
+      .set('authorisation', mentorToken)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
+        res.body.should.have.property('status');
+        res.body.should.have.property('error');
+        done();
+      });
+  });
+});
+
