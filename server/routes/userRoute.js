@@ -9,3 +9,5 @@ const user_controller = new UserController();
 router.post('/auth/signup', user_controller.signUp);
 // signin endpoint
 router.post('/auth/signin', user_controller.signIn);
+// admin can get all users.
+router.get('/users', authorisation.checkAdmin, user_controller.GetAllUsers);

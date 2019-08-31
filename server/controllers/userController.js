@@ -52,5 +52,20 @@ class UserController {
       }
       return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: `${result.error.details[0].message}` });
     };
+    // restrict to admin
+    // eslint-disable-next-line lines-between-class-members
+    GetAllUsers(req, res) {
+      const allusers = User.users;
+      if (allusers.length <= 0) {
+        return res.status(404).send({
+          status: 404,
+          message: 'No users found',
+        });
+      }
+      return res.status(200).send({
+        status: 200,
+        data: allusers,
+      });
+    }
 }
 export default UserController;
