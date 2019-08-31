@@ -67,5 +67,19 @@ class UserController {
         data: allusers,
       });
     }
+
+    GetSpecificUser(req, res) {
+      const singleUser = User.users.find((user) => user.id == req.params.id);
+      if (!singleUser) {
+        return res.status(404).send({
+          status: 404,
+          error: 'User not found',
+        });
+      }
+      return res.status(200).send({
+        status: 200,
+        data: singleUser,
+      });
+    }
 }
 export default UserController;
