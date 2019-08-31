@@ -125,5 +125,19 @@ class UserController {
         err: 'Unable to delete',
       });
     }
+    getAllMentors(req, res) {
+      const allMentors = User.users.filter((user) => user.is_mentor == true);
+      if (allMentors.length < 1) {
+        return res.status(404).send({
+          status: 404,
+          message: 'mentors are not available',
+        });
+      }
+
+      return res.status(200).send({
+        status: 200,
+        data: allMentors,
+      });
+    }
 }
 export default UserController;

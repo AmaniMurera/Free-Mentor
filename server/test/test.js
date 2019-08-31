@@ -122,3 +122,85 @@ describe('change into mentor a user who is already a mentor ', () => {
       });
   });
 });
+// 6. change to mentor a user who does\t exist in the system
+describe('change into mentor a user who is already a mentor ', () => {
+    it('should return User deos\'t exist', (done) => {
+      chai.request(app)
+        .patch('/api/v1/user/1000')
+        .send({
+          is_mentor: 'true',
+        })
+        .set('authorisation', adminToken)
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error');
+          done();
+        });
+    });
+  });
+  // 7. admin delete a user
+  describe('admin delete a user ', () => {
+    it('should Successfully Deleted a User', (done) => {
+      chai.request(app)
+        .delete('/api/v1/user/2')
+  
+        .set('authorisation', adminToken)
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('message');
+          done();
+        });
+    });
+  });
+  // 7. admin delete a user who deosn'\t exist
+  describe('admin delete a user who  deos nott exist ', () => {
+    it('should return User does not exist', (done) => {
+      chai.request(app)
+        .delete('/api/v1/user/10000')
+  
+        .set('authorisation', adminToken)
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('error');
+          done();
+        });
+    });
+  });
+  // 8. delete a user without permission
+  describe('delete a user without permission ', () => {
+    it('should not be able to delete a user when you are not administrator', (done) => {
+      chai.request(app)
+        .delete('/api/v1/user/10000')
+  
+        .set('authorisation', menteeToken)
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('error');
+          done();
+        });
+    });
+  });
+  
+  // 9. user get all mentors
+  describe('user can get all mentors', () => {
+    it('should return all available mentors', (done) => {
+      chai.request(app)
+        .get('/api/v1/mentors')
+  
+        .set('authorisation', menteeToken)
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          expect(res.body).to.be.an('object');
+          expect(res.body.status).to.equal(200);
+          expect(res.status).to.equal(200);
+          done();
+        });
+    });
+  });

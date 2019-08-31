@@ -41,9 +41,34 @@ class Authorisation {
   }
 
   // eslint-disable-next-line class-methods-use-this
+  checkUser(req, res, next) {
+    const token = req.headers.authorisation;
+
+    if (!token) {
+      console.log('amani');
+      return res.status(401).send({
+        status: 401,
+        error: 'Token not provided',
+      });
+    }
+    try {
+      const decode = jwt.verify(token, process.env.Token_Key);
+
+      if (!User.isUserExist(decode.id)) {
+        return res.status(400).send({ status: 400, error: 'The User does not exist.' });
+      }
+      next();
+    } catch (error) {
+      return res.status(400).send(
+        { status: 400, error: error.message },
+      );
+    }
+  }
+
 
   // eslint-disable-next-line class-methods-use-this
- 
+
+  // eslint-disable-next-line class-methods-use-this
 }
 
 export default Authorisation;
