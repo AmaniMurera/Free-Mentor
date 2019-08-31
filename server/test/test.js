@@ -33,7 +33,7 @@ describe('admin get all users ', () => {
   it('should not be able to get all users when admin does not provide token', (done) => {
     chai.request(app)
       .get('/api/v1/users')
-      .set('authorisation','')
+      .set('authorisation', '')
       .set('Accept', 'aplication/json')
       .end((err, res) => {
         res.should.have.status(401);
@@ -45,13 +45,29 @@ describe('admin get all users ', () => {
   it('should not be able to get all users when admin provide invalid token', (done) => {
     chai.request(app)
       .get('/api/v1/users')
-      .set('authorisation','invalidToken')
+      .set('authorisation', 'invalidToken')
       .set('Accept', 'aplication/json')
       .end((err, res) => {
         res.body.should.have.property('status');
-        res.body.should.have.property('error') ;
+        res.body.should.have.property('error');
         done();
       });
   });
+});
 
+// 3.test for get a specific user
+describe('get specific user', () => {
+  it('should return details of specific user ', (done) => {
+    chai.request(app)
+      .get('/api/v1//users/2')
+      .set('authorisation', adminToken)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        expect(res.body).to.have.property('status');
+        expect(res.body).to.have.property('data');
+        expect(res.body.status).to.equal(200);
+        expect(res.body).to.have.property('data').to.be.an('object');
+        done();
+      });
+  });
 });
