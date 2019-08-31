@@ -71,3 +71,54 @@ describe('get specific user', () => {
       });
   });
 });
+// 4. test for get a specific user but a user not found
+describe('admin gets a user by id but the user doesnt exist in the system', () => {
+  it('should return user doesn\'t exist ', (done) => {
+    chai.request(app)
+      .get('/api/v1//users/1000')
+      .set('authorisation', adminToken)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('status');
+        expect(res.body).to.have.property('error');
+        done();
+      });
+  });
+});
+// 5.change a user into a mentor
+describe('admin can change user to mentor,api/v1/auth/user/:id', () => {
+  it('should return User account changed to mentor', (done) => {
+    chai.request(app)
+      .patch('/api/v1/user/2')
+      .set('authorisation', adminToken)
+      .send({ is_mentor: 'true' })
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
+        expect(res.status).to.equal(202);
+        expect(res.body.status).to.equal(202);
+        expect(res.body).to.have.property('data').to.be.an('object');
+        done();
+      });
+  });
+});
+
+// 6. check if a user is already a mentor
+describe('change into mentor a user who is already a mentor ', () => {
+  it('should return User is already a mentor', (done) => {
+    chai.request(app)
+      .patch('/api/v1/user/4')
+      .send({
+        is_mentor: 'true',
+      })
+      .set('authorisation', adminToken)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.should.have.property('status');
+        res.body.should.have.property('error');
+        done();
+      });
+  });
+});

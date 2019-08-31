@@ -81,5 +81,49 @@ class UserController {
         data: singleUser,
       });
     }
+
+    ChangeToMentor(req, res) {
+      const currentUser = User.users.find((user) => user.id == req.params.id);
+      if (!currentUser) {
+        return res.status(404).send({
+          status: 404,
+          error: 'User not found',
+        });
+      }
+      if (currentUser.is_mentor === true) {
+        return res.status(400).send({ status: 400, error: 'User is already a mentor' });
+      }
+      currentUser.is_mentor = req.body.is_mentor;
+
+      return res.status(202).send({
+        status: 202,
+        data: currentUser,
+      });
+    }
+
+    deleteUser(req, res) {
+      const currentuserUser = User.users.find((user) => user.id == req.params.id);
+      if (!currentuserUser) {
+        return res.status(404).send({
+          status: 404,
+          error: 'Not Found',
+        });
+      }
+      const indexOfCurrentuserUser = User.users.indexOf(currentuserUser);
+      if (indexOfCurrentuserUser > -1) {
+        const removeOne = User.users.splice(indexOfCurrentuserUser, 1);
+        if (removeOne) {
+          return res.status(200).send({
+            status: 200,
+            message: 'Successfully Deleted a User',
+          });
+        }
+      }
+
+      return res.status(400).send({
+        status: 400,
+        err: 'Unable to delete',
+      });
+    }
 }
 export default UserController;

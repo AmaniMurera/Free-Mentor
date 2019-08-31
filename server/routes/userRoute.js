@@ -14,3 +14,5 @@ router.post('/auth/signin', user_controller.signIn);
 router.get('/users', authorisation.checkAdmin, user_controller.GetAllUsers);
 // admin can get a specific user
 router.get('/users/:id', authorisation.checkAdmin, user_controller.GetSpecificUser);
+// admin can delete a user
+router.delete('/user/:id', authorisation.checkAdmin, user_controller.deleteUser);
