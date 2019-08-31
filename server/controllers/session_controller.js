@@ -28,5 +28,53 @@ class SessionController {
     }
     return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: `${result.error.details[0].message}` });
   }
+  mentorViewAllSessionRequests(req, res) {
+    const sessionRequests = Session.sessions.filter((session) => session.mentorId === userInfo(res, req.headers.authorisation));
+    if (sessionRequests.length < 1) {
+      return res.status(404).send({
+        status: 404,
+        error: 'No sessions for you',
+      });
+    }
+    return res.status(200).send({
+      status: 200,
+      data: sessionRequests,
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  menteeViewAllSessionRequests(req, res) {
+    const sessionRequests = Session.sessions.filter((session) => session.menteeId === userInfo(res, req.headers.authorisation));
+    if (sessionRequests.length < 1) {
+      return res.status(404).send({
+        status: 404,
+        error: 'No sessions for you',
+      });
+    }
+    return res.status(200).send({
+      status: 200,
+      data: sessionRequests,
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  view_specific_session_request(req, res) {
+    const sessionId2 = req.params.id;
+    const sessionRequests = Session.sessions.filter((session) => session.mentorId === userInfo(res, req.headers.authorisation));
+    if (sessionRequests.length < 1) {
+      return res.status(404).send({
+        status: 404,
+        error: 'No sessions for you',
+      });
+    }
+    const sessionRequest = sessionRequests.filter((el) => el.sessionId == sessionId2);
+  
+
+    if (sessionRequest.length < 1) { return res.status(404).send({ status: 404, error: 'session not found' }); }
+    return res.status(200).send({
+      status: 200,
+      data: sessionRequest,
+    });
+  }
 }
 export default SessionController;
