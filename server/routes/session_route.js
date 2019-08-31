@@ -18,3 +18,5 @@ router.get('/sessions', authorise.checkMentor,session_controller.mentorViewAllSe
 // a mentor can view a specific mentorship request sessions created against him
 router.get('/sessions/:id', authorise.checkMentor,session_controller.view_specific_session_request);
 // a mentor can accept a mentorship request sessions 
+router.patch('/sessions/:id/accept', session_controller.acceptSession);
+// a mentor can reject a mentorship request sessions 

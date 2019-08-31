@@ -76,5 +76,13 @@ class SessionController {
       data: sessionRequest,
     });
   }
+  acceptSession = (req, res) => {
+    if (isNaN(req.params.id.trim())) {
+      return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: 'Session id should be an integer' });
+    }
+    
+    const result = Session.accept(res, req.params.id);
+    return res.status(200).send({ status: 200, data: { data: result } });
+  }
 }
 export default SessionController;

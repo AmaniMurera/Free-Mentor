@@ -65,10 +65,38 @@ class Authorisation {
     }
   }
 
-
   // eslint-disable-next-line class-methods-use-this
+  checkMentor(req, res, next) {
+    const token = req.headers.authorisation;
 
-  // eslint-disable-next-line class-methods-use-this
+    if (!token) {
+      console.log('amani');
+      return res.status(401).send({
+        status: 401,
+        error: 'Token not provided',
+      });
+    }
+    try {
+      const decoded = jwt.verify(token, process.env.Token_Key);
+
+      if (!User.isUserExist(decoded.id)) {
+        return res.status(404).send({ status: 404, error: 'The User  doesn\'t exist.' });
+      }
+
+
+      if (!decoded.is_mentor) {
+      // 403 forbidden
+        return res.status(403).send({ status: 403, error: 'You are not authorized to perform this action' });
+      }
+      next();
+    } catch (error) {
+    // 400: bad request
+      return res.status(400).send(
+        { status: 400, error: error.message },
+      );
+    }
+  }
+
 }
 
 export default Authorisation;
