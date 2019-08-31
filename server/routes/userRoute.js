@@ -20,3 +20,5 @@ router.delete('/user/:id', authorisation.checkAdmin, user_controller.deleteUser)
 router.patch('/user/:id', authorisation.checkAdmin, user_controller.ChangeToMentor);
 // user can get all mentors
 router.get('/mentors', authorisation.checkUser, user_controller.getAllMentors);
+// user can get a specific mentor by Id
+router.get('/mentors/:id', user_controller.GetOneMentor);
