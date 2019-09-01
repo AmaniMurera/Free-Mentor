@@ -5,7 +5,7 @@ Free Mentors is a social initiative where accomplished professionals become role
 
 Free Mentors is a free, easy-to-use platform that allows young peaple and mentors to connect so they can solve problems together.
 
-Here is UI template for this project on github  [link](murera.github.io/Free-Mentor/UI/)
+Here is UI template for this project on github  [link](https://murera.github.io/Free-Mentor/UI)
 
 #### Here is a list of all API Endpoints that you will find:
 
@@ -25,4 +25,83 @@ Here is UI template for this project on github  [link](murera.github.io/Free-Men
 | GET          | `/sessions/<:user-id:>`   |Mentor can view a specific mentorship request session|
 | PATCH          | `/sessions/<:user-id:>/accept`   |Mentor can accept a mentorship request sessions|
 | PATCH          | `/sessions/<:user-id:>/reject`   |Mentor can reject a mentorship request sessions|
+
+
+# Technology Tools used
+* Server-side Framework: **Node/Express JS**
+* Linting Library: **ESlint**
+* Style Guide: **Airbnb**
+* Testing Framework: **Mocha** with **Chai**
+* Documentation Tools: **Swagger**
+
+# Additional Tools
+* JavaScript Es6 with **Babel** transpiler
+* TravisCI for Continous Integration
+* nyc for test coverage
+* CodeClimate and Coveralls for badges
+* Heroku for Deployment
+
+The url of the app on heroku is this one [https://free-mentorship.herokuapp.com/](https://free-mentorship.herokuapp.com/).
+
+
+This is the list of all routes as on the **heroku deployment**:
+* Fetch all users  [https://free-mentorship.herokuapp.com/api/v1/users](https://free-mentorship.herokuapp.com/api/v1/users)
+* Fetch a specific user [https://free-mentorship.herokuapp.com/api/v1/user/<:user-id:>](https://free-mentorship.herokuapp.com/api/v1/user/<:user-id:>)
+* change user to mentor [https://free-mentorship.herokuapp.com/api/v1/user/<:user-id:>](https://free-mentorship.herokuapp.com/api/v1/user/<:user-id:>)
+* delete a specific user [https://free-mentorship.herokuapp.com/api/v1/<:user-id:>](https://free-mentorship.herokuapp.com/api/v1/<:user-id:>)
+* get all mentors [https://free-mentorship.herokuapp.com/api/v1/mentors]([https://free-mentorship.herokuapp.com/api/v1/mentors)
+* get a specific mentor [https://free-mentorship.herokuapp.com/api/v1/mentors/<:mentor-id:>]([https://free-mentorship.herokuapp.com/api/v1/mentors/<:mentor-id:>)
+* sign up [https://free-mentorship.herokuapp.com/api/v1/auth/signup](https://free-mentorship.herokuapp.com/api/v1/auth/signup)
+* sign in [https://free-mentorship.herokuapp.com/api/v1/auth/signin](https://free-mentorship.herokuapp.com/api/v1/auth/signin)
+* create session [https://free-mentorship.herokuapp.com/api/v1/sessions]([https://free-mentorship.herokuapp.com/api/v1/sessions)
+* mentor view all sessions [https://free-mentorship.herokuapp.com/api/v1/sessions]([https://free-mentorship.herokuapp.com/api/v1/sessions)
+* mentee view all sessions [https://free-mentorship.herokuapp.com/api/v1/sessions]([https://free-mentorship.herokuapp.com/api/v1/sessions)
+* mentor view a specific session [https://free-mentorship.herokuapp.com/api/v1/sessions/<:session-id:>]([https://free-mentorship.herokuapp.com/api/v1/session/<:session-id:>)
+* mentor accept session [https://free-mentorship.herokuapp.com/api/v1/sessions/<:session-id:>/accept]([https://free-mentorship.herokuapp.com/api/v1/session/<:session-id:>/accept)
+* mentor reject session [https://free-mentorship.herokuapp.com/api/v1/sessions/<:session-id:>/reject]([https://free-mentorship.herokuapp.com/api/v1/session/<:session-id:>/reject)
+
+For a better test you will need to use [POSTMAN](https://www.getpostman.com/)
+
+# Setup Instruction
+* Install [git](https://git-scm.com/downloads)
+* Install [Node js](https://nodejs.org/en/)
+
+For getting the files into your local machine open git bash and do git clone with repository url
+
+```
+$ git clone https://github.com/murera/Free-Mentor.git
+```
+Navigate to the folder containing all code files by typing cd folder_name
+
+```
+$ cd Free-Mentors
+```
+Install dependincies as they appear in package.json file by
+
+```
+$ npm install
+```
+To start the server do
+
+```
+$ npm run dev-start
+```
+To run the test do
+
+```
+$ npm run test
+```
+
+
+## Author
+
+[Amani MURERA](https://murera.github.io/Free-Mentor/)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENCE.md) file for details
+
+## Acknowledgments
+
+* [Andela Kigali](https://andela.com/)
 
