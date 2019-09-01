@@ -44,7 +44,8 @@
     "mocha": "^6.2.0",
     "node-datetime": "^2.1.2",
     "nyc": "^14.1.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "yml": "^1.0.0"
   },
   "devDependencies": {
     "coveralls": "^3.0.6",
