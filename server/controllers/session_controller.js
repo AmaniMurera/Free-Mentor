@@ -80,7 +80,7 @@ class SessionController {
 
   acceptSession = (req, res) => {
     if (isNaN(req.params.id.trim())) {
-      return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: 'Session id should be an integer' });
+      return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: 'Session not found' });
     }
 
     const result = Session.accept(res, req.params.id);

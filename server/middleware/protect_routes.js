@@ -16,11 +16,9 @@ class Authorisation {
 
     try {
       const decode = jwt.verify(token, process.env.Token_Key);
-      if (!decode) {
-        return res.status(400).send({ error: 'token is invalid' });
-      }
+     
       if (decode.is_admin != true) {
-        return res.status(403).send({ error: 'you are not admin' });
+        return res.status(403).send({ status: 403, error: 'you are not admin' });
       }
 
       if (!User.isUserExist(decode.id)) {
