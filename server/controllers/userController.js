@@ -29,7 +29,7 @@ class UserController {
         const user = User.create(req.body);
         return res.status(status.RESOURCE_CREATED).send(user);
       }
-      return res.status(400).send({ status: 400, error: `${result.error.details[0].message}` });
+      return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: `${result.error.details[0].message}` });
     };
 
     signIn = (req, res) => {
@@ -57,13 +57,13 @@ class UserController {
     GetAllUsers(req, res) {
       const allusers = User.users;
       if (allusers.length <= 0) {
-        return res.status(404).send({
-          status: 404,
+        return res.status(status.NOT_FOUND).send({
+          status: status.NOT_FOUND,
           message: 'No users found',
         });
       }
-      return res.status(200).send({
-        status: 200,
+      return res.status(status.REQUEST_SUCCEDED).send({
+        status: status.REQUEST_SUCCEDED,
         data: allusers,
       });
     }
@@ -71,41 +71,45 @@ class UserController {
     GetSpecificUser(req, res) {
       const singleUser = User.users.find((user) => user.id == req.params.id);
       if (!singleUser) {
-        return res.status(404).send({
-          status: 404,
+        return res.status(status.NOT_FOUND).send({
+          status: status.NOT_FOUND,
           error: 'User not found',
         });
       }
-      return res.status(200).send({
-        status: 200,
+      return res.status(status.REQUEST_SUCCEDED).send({
+        status: status.REQUEST_SUCCEDED,
         data: singleUser,
       });
     }
 
-    ChangeToMentor(req, res) {
-      const currentUser = User.users.find((user) => user.id == req.params.id);
-      if (!currentUser) {
-        return res.status(404).send({
-          status: 404,
+    ChangeUserToMentor(req, res) {
+      const user = User.users.find((user) => user.id == req.params.id);
+      if (!user) {
+        return res.status(status.NOT_FOUND).send({
+          status: status.NOT_FOUND,
           error: 'User not found',
         });
       }
-      if (currentUser.is_mentor === true) {
-        return res.status(400).send({ status: 400, error: 'User is already a mentor' });
+      if (user.is_mentor === true) {
+        return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: 'User is already a mentor' });
       }
-      currentUser.is_mentor = req.body.is_mentor;
+      user.is_mentor = true;
 
-      return res.status(202).send({
-        status: 202,
-        data: currentUser,
+      return res.status(status.REQUEST_SUCCEDED).send({
+        status: status.REQUEST_SUCCEDED,
+        data: {
+          message: 'user successfully changed to mentor',
+          user,
+
+        },
       });
     }
 
     deleteUser(req, res) {
       const currentuserUser = User.users.find((user) => user.id == req.params.id);
       if (!currentuserUser) {
-        return res.status(404).send({
-          status: 404,
+        return res.status(status.NOT_FOUND).send({
+          status: status.NOT_FOUND,
           error: 'Not Found',
         });
       }
@@ -113,15 +117,15 @@ class UserController {
       if (indexOfCurrentuserUser > -1) {
         const removeOne = User.users.splice(indexOfCurrentuserUser, 1);
         if (removeOne) {
-          return res.status(200).send({
-            status: 200,
+          return res.status(status.REQUEST_SUCCEDED).send({
+            status: status.REQUEST_SUCCEDED,
             message: 'Successfully Deleted a User',
           });
         }
       }
 
-      return res.status(400).send({
-        status: 400,
+      return res.status(status.BAD_REQUEST).send({
+        status: status.BAD_REQUEST,
         err: 'Unable to delete',
       });
     }
@@ -129,14 +133,14 @@ class UserController {
     getAllMentors(req, res) {
       const allMentors = User.users.filter((user) => user.is_mentor == true);
       if (allMentors.length < 1) {
-        return res.status(404).send({
-          status: 404,
+        return res.status(status.NOT_FOUND).send({
+          status: status.NOT_FOUND,
           message: 'mentors are not available',
         });
       }
 
-      return res.status(200).send({
-        status: 200,
+      return res.status(status.REQUEST_SUCCEDED).send({
+        status: status.REQUEST_SUCCEDED,
         data: allMentors,
       });
     }
@@ -144,23 +148,25 @@ class UserController {
     GetOneMentor(req, res) {
       const allMentors = User.users.filter((user) => user.is_mentor == true);
       if (allMentors.length < 1) {
-        return res.status(404).send({
-          status: 404,
+        return res.status(status.NOT_FOUND).send({
+          status: status.NOT_FOUND,
           message: 'mentors are not available',
         });
       }
 
       const specificMentor = allMentors.find((user) => user.id == req.params.id);
       if (!specificMentor) {
-        return res.status(404).send({
-          status: 404,
+        return res.status(status.NOT_FOUND).send({
+          status: status.NOT_FOUND,
           error: 'No mentor found',
         });
       }
-      return res.status(200).send({
-        status: 200,
+      return res.status(status.REQUEST_SUCCEDED).send({
+        status: status.REQUEST_SUCCEDED,
         data: specificMentor,
       });
     }
 }
+
+
 export default UserController;

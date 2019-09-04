@@ -297,6 +297,7 @@ button:hover, .icon:hover, #login-title:hover{
 }
 .full-width {
     width: 100%;
+    padding-left: 7px;
     overflow: auto;
 }
 .button {
@@ -367,17 +368,17 @@ input, .select-age{
     color: black;
     background-color: white;
     border: 2px solid whitesmoke;
-    border-left: 3px solid rgba(42, 58, 92, 0.8);
+    border-bottom: 3px solid rgba(42, 58, 92, 0.8);
 
 }
 
 textarea{
-    border-left: 3px solid rgba(42, 58, 92, 0.8);
+    border-bottom: 3px solid rgba(42, 58, 92, 0.8);
 }
 .text-box{
     width: 100%;
     border: 2px solid whitesmoke;
-border-left: 3px solid rgba(42, 58, 92, 0.8);
+border-bottom: 3px solid rgba(42, 58, 92, 0.8);
 }
 input:hover, input:active , textarea:hover, textarea:active{
 	border-color: #2196F3;
@@ -514,10 +515,20 @@ input[type="submit"] {
     max-width: 960px;
     max-width: 90%;
     margin: 0 auto 30px;
+    
+   
   }
   
   article {
     position: relative;
+    border-left: 0.09px solid #233245;
+    border-right: 0.1px solid #233245;
+    border-bottom: 0.1px solid #f1f1f1;
+    /* border: 1px solid #2196F3; */
+    background-color: #f0f0f1;
+  }
+  .modelbtn1{
+    border-right: 0.2px solid #233245;
   }
   
   .article-img {
@@ -573,7 +584,8 @@ input[type="submit"] {
     background-color: #fff;
     margin: auto;
     /* width: 50%; */
-    width: 80%; 
+    width: 80%;
+ 
     border-radius: 12px;
     
     animation-name: modelAnimation;
@@ -611,14 +623,19 @@ input[type="submit"] {
 
 .modalLayout-body {padding: 10px 16px;}
 
+.view{
+  display: flex;
+}
+
 .main-image img{
-width:100%;
+width:95%;
 height:100%;
-border-radius:50%;
+border-radius: 2%;
+
 }
 
 .details{
-display:flex; flex-direction:column;justify-content: space-between;
+display:flex; flex-direction:column;justify-content: space-between; margin-top: 15px; margin-bottom: 15px;
 }
 @media screen and (max-width: 790px) {
     .modalLayout-content {
@@ -1078,7 +1095,7 @@ line-height:1.5;
   margin: 0 0 5px 0;
 }
 }
-/* end of about us */
+
 /* footer */
 .footer{
 background-color:#f0f0f0;

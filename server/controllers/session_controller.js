@@ -21,39 +21,40 @@ class SessionController {
         res.status(status.NOT_FOUND).send({ status: status.NOT_FOUND, error: 'Such mentor is not found' });
       }
       const session = Session.createSession(res, req.body, req.headers.authorisation);
-      return res.status(200).send({
-        status: 200,
+      return res.status(status.REQUEST_SUCCEDED).send({
+        status: status.REQUEST_SUCCEDED,
         data: session,
       });
     }
     return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: `${result.error.details[0].message}` });
   }
 
+  // eslint-disable-next-line class-methods-use-this
   mentorViewAllSessionRequests(req, res) {
-    const sessionRequests = Session.sessions.filter((session) => session.mentorId === userInfo(res, req.headers.authorisation));
+    const sessionRequests = Session.sessions.filter((el) => el.mentorId === userInfo(res, req.headers.authorisation));
     if (sessionRequests.length < 1) {
-      return res.status(404).send({
-        status: 404,
+      return res.status(status.NOT_FOUND).send({
+        status: status.NOT_FOUND,
         error: 'No sessions for you',
       });
     }
-    return res.status(200).send({
-      status: 200,
+    return res.status(status.REQUEST_SUCCEDED).send({
+      status: status.REQUEST_SUCCEDED,
       data: sessionRequests,
     });
   }
 
   // eslint-disable-next-line class-methods-use-this
   menteeViewAllSessionRequests(req, res) {
-    const sessionRequests = Session.sessions.filter((session) => session.menteeId === userInfo(res, req.headers.authorisation));
+    const sessionRequests = Session.sessions.filter((el) => el.menteeId === userInfo(res, req.headers.authorisation));
     if (sessionRequests.length < 1) {
-      return res.status(404).send({
-        status: 404,
+      return res.status(status.NOT_FOUND).send({
+        status: status.NOT_FOUND,
         error: 'No sessions for you',
       });
     }
-    return res.status(200).send({
-      status: 200,
+    return res.status(status.REQUEST_SUCCEDED).send({
+      status: status.REQUEST_SUCCEDED,
       data: sessionRequests,
     });
   }
@@ -61,19 +62,19 @@ class SessionController {
   // eslint-disable-next-line class-methods-use-this
   view_specific_session_request(req, res) {
     const sessionId2 = req.params.id;
-    const sessionRequests = Session.sessions.filter((session) => session.mentorId === userInfo(res, req.headers.authorisation));
+    const sessionRequests = Session.sessions.filter((el) => el.mentorId === userInfo(res, req.headers.authorisation));
     if (sessionRequests.length < 1) {
-      return res.status(404).send({
-        status: 404,
+      return res.status(status.NOT_FOUND).send({
+        status: status.NOT_FOUND,
         error: 'No sessions for you',
       });
     }
     const sessionRequest = sessionRequests.filter((el) => el.sessionId == sessionId2);
 
 
-    if (sessionRequest.length < 1) { return res.status(404).send({ status: 404, error: 'session not found' }); }
-    return res.status(200).send({
-      status: 200,
+    if (sessionRequest.length < 1) { return res.status(status.NOT_FOUND).send({ status: status.NOT_FOUND, error: 'session not found' }); }
+    return res.status(status.REQUEST_SUCCEDED).send({
+      status: status.REQUEST_SUCCEDED,
       data: sessionRequest,
     });
   }
@@ -84,7 +85,7 @@ class SessionController {
     }
 
     const result = Session.accept(res, req.params.id);
-    return res.status(200).send({ status: 200, data: { data: result } });
+    return res.status(status.REQUEST_SUCCEDED).send({ status: status.REQUEST_SUCCEDED, data: { data: result } });
   }
 
   // reject session
@@ -93,7 +94,7 @@ class SessionController {
      return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: 'Session id should be an integer' });
    }
    const result = Session.reject(res, req.params.id);
-   return res.status(200).send({ status: 200, data: { data: result } });
+   return res.status(status.REQUEST_SUCCEDED).send({ status: status.REQUEST_SUCCEDED, data: { data: result } });
  }
 }
 export default SessionController;

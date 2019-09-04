@@ -48,10 +48,10 @@ This is the list of all routes as on the **heroku deployment**:
 * Fetch all users  [https://free-mentorship.herokuapp.com/api/v1/users](https://free-mentorship.herokuapp.com/api/v1/users)
 * Fetch a specific user [https://free-mentorship.herokuapp.com/api/v1/user/<:user-id:>](https://free-mentorship.herokuapp.com/api/v1/user/<:user-id:>)
 * change user to mentor [https://free-mentorship.herokuapp.com/api/v1/user/<:user-id:>](https://free-mentorship.herokuapp.com/api/v1/user/<:user-id:>)
-* delete a specific user [https://free-mentorship.herokuapp.com/api/v1/<:user-id:>](https://free-mentorship.herokuapp.c
-om/api/v1/<:user-id:>)
+* delete a  user [https://free-mentorship.herokuapp.com/api/v1/<:user-id:>](https://free-mentorship.herokuapp.com/api/v1/<:user-id:>)
+
 * get all mentors[https://free-mentorship.herokuapp.com/api/v1/mentors](https://free-mentorship.herokuapp.com/api/v1/mentors)
-* specific mentor[https://free-mentorship.herokuapp.com/api/v1/mentors/<:id:>](https://free-mentorship.herokuapp.com/api/v1/mentors/<:id:>)
+* specific mentor[https://free-mentorship.herokuapp.com/api/v1/mentors/<:mentor-id:>](https://free-mentorship.herokuapp.com/api/v1/mentors/<:mentor-id:>)
 * sign up [https://free-mentorship.herokuapp.com/api/v1/auth/signup](https://free-mentorship.herokuapp.com/api/v1/auth/signup)
 * sign in [https://free-mentorship.herokuapp.com/api/v1/auth/signin](https://free-mentorship.herokuapp.com/api/v1/auth/signin)
 * create session [https://free-mentorship.herokuapp.com/api/v1/sessions](https://free-mentorship.herokuapp.com/api/v1/sessions)
@@ -100,7 +100,7 @@ $ npm run test
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENCE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for more details
 
 ## Acknowledgments
 
