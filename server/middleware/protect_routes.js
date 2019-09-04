@@ -1,6 +1,7 @@
 
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel';
+import status from './../helpers/StatusCode';
 
 class Authorisation {
   // eslint-disable-next-line class-methods-use-this
@@ -8,8 +9,8 @@ class Authorisation {
     const token = req.headers.authorisation;
 
     if (!token) {
-      return res.status(401).send({
-        status: 401,
+      return res.status(status.UNAUTHORIZED).send({
+        status: status.UNAUTHORIZED,
         error: 'Token not provided',
       });
     }
@@ -18,24 +19,19 @@ class Authorisation {
       const decode = jwt.verify(token, process.env.Token_Key);
      
       if (decode.is_admin != true) {
-        return res.status(403).send({ status: 403, error: 'you are not admin' });
+        return res.status(status.FORBIDDEN).send({ status: status.FORBIDDEN, error: 'you are not admin' });
       }
 
       if (!User.isUserExist(decode.id)) {
-        return res.status(400).send({ status: 400, error: 'The User doesn\'t exist.' });
+        return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: 'The User doesn\'t exist.' });
       }
       next();
     } catch (error) {
-      return res.status(400).send(
-        { status: 400, error: error.message },
+      return res.status(status.BAD_REQUEST).send(
+        { status: status.BAD_REQUEST, error: error.message },
       );
     }
-    // const decode = jwt.verify(token, process.env.Token_Key);
-    // if(decode.is_admin != true){
-    //   return res.status(403).send({  'message': 'you are not admin'});
-    // }
-
-    // next();
+    
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -44,21 +40,22 @@ class Authorisation {
 
     if (!token) {
       console.log('amani');
-      return res.status(401).send({
-        status: 401,
+      return res.status(status.UNAUTHORIZED).send({
+        status: status.UNAUTHORIZED,
         error: 'Token not provided',
       });
     }
     try {
       const decode = jwt.verify(token, process.env.Token_Key);
+      // check if user exist
 
       if (!User.isUserExist(decode.id)) {
-        return res.status(400).send({ status: 400, error: 'The User does not exist.' });
+        return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: 'The User does not exist.' });
       }
       next();
     } catch (error) {
-      return res.status(400).send(
-        { status: 400, error: error.message },
+      return res.status(status.BAD_REQUEST).send(
+        { status: status.BAD_REQUEST, error: error.message },
       );
     }
   }
@@ -69,8 +66,8 @@ class Authorisation {
 
     if (!token) {
       console.log('amani');
-      return res.status(401).send({
-        status: 401,
+      return res.status(status.UNAUTHORIZED).send({
+        status: status.UNAUTHORIZED,
         error: 'Token not provided',
       });
     }
@@ -78,19 +75,19 @@ class Authorisation {
       const decoded = jwt.verify(token, process.env.Token_Key);
 
       if (!User.isUserExist(decoded.id)) {
-        return res.status(404).send({ status: 404, error: 'The User  doesn\'t exist.' });
+        return res.status(status.NOT_FOUND).send({ status: status.NOT_FOUND, error: 'The User  doesn\'t exist.' });
       }
 
 
       if (!decoded.is_mentor) {
-      // 403 forbidden
-        return res.status(403).send({ status: 403, error: 'You are not authorized to perform this action' });
+      // status.FORBIDDEN forbidden
+        return res.status(status.FORBIDDEN).send({ status: status.FORBIDDEN, error: 'You are not authorized to perform this action' });
       }
       next();
     } catch (error) {
-    // 400: bad request
-      return res.status(400).send(
-        { status: 400, error: error.message },
+    // status.BAD_REQUEST: bad request
+      return res.status(status.BAD_REQUEST).send(
+        { status: status.BAD_REQUEST, error: error.message },
       );
     }
   }

@@ -21,7 +21,7 @@ class User {
         is_admin: true,
         is_mentor: false,
       },
-      { // set a default user1
+      { // set a default use1
         id: 2,
         first_name: 'Amani',
         last_name: 'Murera',
