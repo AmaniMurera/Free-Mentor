@@ -1,5 +1,3 @@
-/* eslint-disable class-methods-use-this */
-import Joi from 'joi';
 import User from '../models/userModel';
 import status from '../helpers/StatusCode';
 import Validator from '../helpers/validator';
@@ -10,7 +8,7 @@ class UserController {
       const result = Validator.validateSignUpRequest(req.body);
       if (result.error == null) {
         if (User.isEmailTaken(req.body.email)) {
-          // 409 = Conflict due to existing email
+          
           return res.status(status.REQUEST_CONFLICT).send({
             status: status.REQUEST_CONFLICT,
             error: `${req.body.email} is already taken!,try another email.`,
@@ -19,7 +17,7 @@ class UserController {
        const user = User.create(req.body);
         return res.status(status.RESOURCE_CREATED).send(user);
       }
-      // bad request
+      
       return res.status(status.BAD_REQUEST).send({
         status: status.BAD_REQUEST,
         error: `${result.error.details[0].message}`,
@@ -35,10 +33,10 @@ class UserController {
           res.set('x-auth-token', user.data.token);
           return res.status(status.REQUEST_SUCCEDED).send(user);
         }
-        // Credentials do not match
+        
         return res.status(status.UNAUTHORIZED).send(user);
       }
-      // Request does not fullfill
+      
       return res.status(status.BAD_REQUEST).send({
         status: status.BAD_REQUEST,
         error: `${result.error.details[0].message}`,

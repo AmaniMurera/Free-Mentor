@@ -10,9 +10,7 @@ const user_controller = new UserController();
 router.post('/signup', user_controller.signUp);
 router.post('/signin', user_controller.signIn);
 
-router.get('/', authorisation.checkAdmin, user_controller.GetAllUsers);
 
-router.get('/:id', authorisation.checkAdmin, user_controller.GetSpecificUser);
 
 router.delete('/:id', authorisation.checkAdmin, user_controller.deleteUser);
 

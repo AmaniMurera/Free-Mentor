@@ -1,13 +1,12 @@
 import Joi from 'joi';
 
 class Validator {
-  // General Validation method for all ones
+  
   validate = (request, schema) => {
     const result = Joi.validate(request, schema);
     return result;
   };
 
-  // SignUp validator fn
   validateSignUpRequest = (request) => {
     const schema = {
       first_name: Joi.string().alphanum().required(),
@@ -24,7 +23,7 @@ class Validator {
     return this.validate(request, schema);
   };
 
-  // LogIn validator fn
+
   validateSignInRequest = (request) => {
     const schema = {
       email: Joi.string().email().required(),
@@ -33,7 +32,6 @@ class Validator {
     return this.validate(request, schema);
   };
 
-  // Mentorship Request Validator fn
   validateMentorShipRequest = (request) => {
     const schema = {
       mentorId: Joi.number().required(),

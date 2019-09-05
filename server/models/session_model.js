@@ -6,7 +6,7 @@ import User from './userModel';
 class Session {
   constructor() {
     this.sessions = [
-      // set default session1
+     
       {
         sessionId: 1,
         mentorId: 4,
@@ -15,7 +15,7 @@ class Session {
         menteeEmail: 'Mureraamani@gmail.com',
         status: 'pending',
       },
-      // set default session2
+      
       {
         sessionId: 2,
         mentorId: 4,
@@ -27,7 +27,6 @@ class Session {
     ];
   }
 
-  // create sessions
   createSession = (res, payload, token) => {
     let sessionid = this.sessions.length + 1;
 
@@ -48,7 +47,6 @@ class Session {
     return newSession;
   };
 
-  // accept session
   accept = (res, id) => {
     const session = this.sessions.find((sid) => sid.sessionId === parseInt(id, 10));
     if (!session) {
@@ -74,7 +72,7 @@ class Session {
     return session;
   }
 
-   // reject sessions
+  
    reject = (res, id) => {
      const session = this.sessions.find((sid) => sid.sessionId === parseInt(id, 10));
      if (!session) return res.status(404).send({ status: 404, error: 'this session  is not found!' });

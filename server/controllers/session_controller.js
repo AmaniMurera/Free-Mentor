@@ -1,4 +1,3 @@
-import Joi from '@hapi/joi';
 import Session from '../models/session_model';
 import status from '../helpers/StatusCode';
 import User from '../models/userModel';
@@ -24,7 +23,6 @@ class SessionController {
     }
     return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: `${result.error.details[0].message}` });
   }
-
 
   mentorViewAllSessionRequests(req, res) {
     const sessionRequests = Session.sessions.filter((session) => session.mentorId === userInfo(res, req.headers.authorisation));
@@ -82,9 +80,6 @@ class SessionController {
     const result = Session.accept(res, req.params.id);
     return res.status(200).send({ status: 200, data: { data: result } });
   }
-
- 
- // reject session
  rejectSession = (req, res) => {
   if (isNaN(req.params.id.trim())) {
     return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: 'Session id should be an integer' });
