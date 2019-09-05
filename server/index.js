@@ -3,8 +3,8 @@ import swaggerui from 'swagger-ui-express';
 import express from 'express';
 import bodyParser from 'body-parser';
 import config from './config/default';
-// import userRouter from './routes/userRoute';
-// import sessionRoute from './routes/session_route';
+import userRouter from './routes/userRoute';
+import sessionRoute from './routes/session_route';
 import swaggerdocs from '../docs/swaggerdocs.json';
 import routes from './routes/routes';
 

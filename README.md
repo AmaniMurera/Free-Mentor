@@ -1,9 +1,8 @@
+[![Build Status](https://travis-ci.org/murera/Free-Mentor.svg?branch=develop)](https://travis-ci.org/murera/Free-Mentor) [![Coverage Status](https://coveralls.io/repos/github/murera/Free-Mentor/badge.svg?branch=develop)](https://coveralls.io/github/murera/Free-Mentor?branch=develop)  [![Maintainability](https://api.codeclimate.com/v1/badges/be19534b73ff5410ec2c/maintainability)](https://codeclimate.com/github/murera/Free-Mentor/maintainability)
+
 # Free-Mentor
 
-Free Mentors is a social initiative where accomplished professionals become role models to young people to provide free mentorship sessions.
-[![Build Status](https://travis-ci.org/murera/Free-Mentor.svg?branch=develop)](https://travis-ci.org/murera/Free-Mentor)  [![Coverage Status](https://coveralls.io/repos/github/murera/Free-Mentor/badge.svg?branch=ch-setup-travis-168234280)](https://coveralls.io/github/murera/Free-Mentor?branch=ch-setup-travis-168234280)  [![Maintainability](https://api.codeclimate.com/v1/badges/be19534b73ff5410ec2c/maintainability)](https://codeclimate.com/github/murera/Free-Mentor/maintainability)
-
-Free Mentors is a free, easy-to-use platform that allows young peaple and mentors to connect so they can solve problems together.
+Free Mentors is a social initiative where accomplished professionals become role models to young people to provide free mentorship sessions. This platform is easy to use and allows young peaple and mentors to connect so that they can solve problems together.
 
 Here is UI template for this project on github  [link](https://murera.github.io/Free-Mentor/UI)
 

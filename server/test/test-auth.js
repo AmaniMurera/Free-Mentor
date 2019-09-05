@@ -2,7 +2,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../index';
 
-// destructuring
+
 const { expect } = chai;
 chai.use(chaiHttp);
 chai.should();
@@ -282,7 +282,7 @@ describe('Authentication testss', () => {
       .end((err, res) => {
         expect(res.body).to.be.an('object');
         expect(res.status).to.equal(409);
-        expect(res.body.error).to.equal(`${email} already exists`);
+        res.body.should.have.property('error');
         done();
       });
   });
