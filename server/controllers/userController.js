@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import Joi from 'joi';
 import User from '../models/userModel';
 import status from '../helpers/StatusCode';
@@ -6,7 +5,7 @@ import status from '../helpers/StatusCode';
 
 class UserController {
     signUp = (req, res) => {
-      // validation using JOI npm
+    
       const schema = {
         first_name: Joi.string().alphanum().required(),
         last_name: Joi.string().alphanum().required(),
@@ -22,7 +21,7 @@ class UserController {
       const result = Joi.validate(req.body, schema);
       if (result.error == null) {
         if (User.isEmailTaken(req.body.email)) {
-          // 409 = Conflict due to existing email
+          
           return res.status(status.REQUEST_CONFLICT).send({ status: status.REQUEST_CONFLICT, error: `${req.body.email} already exists` });
         }
 
@@ -33,15 +32,14 @@ class UserController {
     };
 
     signIn = (req, res) => {
-      // validation using JOI package from npm registry
+      
       const schema = {
         email: Joi.string().email().required(),
         password: Joi.required(),
       };
       const result = Joi.validate(req.body, schema);
       if (result.error == null) {
-      // Everything is okay
-        // We fire up User model to login user
+     
         const user = User.login(req.body);
         if (user.status === status.REQUEST_SUCCEDED) {
           res.set('x-auth-token', user.data.token);
@@ -52,8 +50,7 @@ class UserController {
       }
       return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: `${result.error.details[0].message}` });
     };
-    // restrict to admin
-    // eslint-disable-next-line lines-between-class-members
+    
     GetAllUsers(req, res) {
       const allusers = User.users;
       if (allusers.length <= 0) {

@@ -4,11 +4,11 @@ import status from '../helpers/StatusCode';
 
 
 class User {
-  // constructor invoked automatically after creating object of class
+ 
   constructor() {
     this.users = [
       {
-        // set a default admin
+      
         id: 1,
         first_name: 'Amani',
         last_name: 'Murera',
@@ -21,7 +21,7 @@ class User {
         is_admin: true,
         is_mentor: false,
       },
-      { // set a default use1
+      { 
         id: 2,
         first_name: 'Amani',
         last_name: 'Murera',
@@ -34,7 +34,7 @@ class User {
         is_admin: false,
         is_mentor: false,
       },
-      { // set a default user2
+      { 
         id: 3,
         first_name: 'Amani',
         last_name: 'Murera',
@@ -47,7 +47,7 @@ class User {
         is_admin: false,
         is_mentor: false,
       },
-      { // set a default mentor
+      { 
         id: 4,
         first_name: 'Amani',
         last_name: 'Murera',
@@ -143,7 +143,7 @@ class User {
       return false;
     }
 
-     // return user email
+     
      userEmail = (user_id) => {
        const user = this.users.find((u) => u.id === parseInt(user_id, 10));
        return user.email;

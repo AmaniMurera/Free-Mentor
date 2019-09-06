@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 import jwt from 'jsonwebtoken';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
@@ -199,7 +199,7 @@ describe('mentor can view all mentorship request sessions created against him', 
         done();
       });
   });
-  // successfully view all mentorship request sessions
+
   it('should be able view all mentorship request sessions when a user is not a mentor', (done) => {
     chai.request(app)
       .get('/api/v1/sessions')
@@ -215,7 +215,7 @@ describe('mentor can view all mentorship request sessions created against him', 
   });
 });
 
-// a mentor can view a specific mentorship request session created against him
+
 describe('mentor can view a specific mentorship request session created against him', () => {
   it('should be able view a specific mentorship request session', (done) => {
     chai.request(app)
