@@ -4,7 +4,7 @@ import User from '../models/userModel';
 import status from './../helpers/StatusCode';
 
 class Authorisation {
-  // eslint-disable-next-line class-methods-use-this
+ 
   checkAdmin(req, res, next) {
     const token = req.headers.authorisation;
 
@@ -34,7 +34,7 @@ class Authorisation {
     
   }
 
-  // eslint-disable-next-line class-methods-use-this
+ 
   checkUser(req, res, next) {
     const token = req.headers.authorisation;
 
@@ -47,7 +47,7 @@ class Authorisation {
     }
     try {
       const decode = jwt.verify(token, process.env.Token_Key);
-      // check if user exist
+     
 
       if (!User.isUserExist(decode.id)) {
         return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: 'The User does not exist.' });
@@ -60,7 +60,7 @@ class Authorisation {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
+
   checkMentor(req, res, next) {
     const token = req.headers.authorisation;
 
@@ -80,12 +80,12 @@ class Authorisation {
 
 
       if (!decoded.is_mentor) {
-      // status.FORBIDDEN forbidden
+      
         return res.status(status.FORBIDDEN).send({ status: status.FORBIDDEN, error: 'You are not authorized to perform this action' });
       }
       next();
     } catch (error) {
-    // status.BAD_REQUEST: bad request
+    
       return res.status(status.BAD_REQUEST).send(
         { status: status.BAD_REQUEST, error: error.message },
       );
