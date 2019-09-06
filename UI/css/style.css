@@ -377,7 +377,7 @@ textarea{
 }
 .text-box{
     width: 100%;
-    border: 2px solid whitesmoke;
+    border: 1px solid whitesmoke;
 border-bottom: 1px solid rgba(42, 58, 92, 0.8);
 }
 input:hover, input:active , textarea:hover, textarea:active{
