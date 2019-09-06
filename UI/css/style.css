@@ -93,7 +93,7 @@ html{
       .nav-links:hover:not(.activee) {
         /* background-color: #6a747e ;
         border-radius: 10px; */
-        border-bottom:5px solid white;
+        border-bottom:1px solid white;
         padding: 5px;
         
       }
