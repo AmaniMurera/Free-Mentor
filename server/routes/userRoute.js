@@ -12,7 +12,7 @@ router.post('/signin', user_controller.signIn);
 
 
 
-router.delete('/:id', authorisation.checkAdmin, user_controller.deleteUser);
+
 
 router.patch('/:id', authorisation.checkAdmin, user_controller.ChangeUserToMentor);
 

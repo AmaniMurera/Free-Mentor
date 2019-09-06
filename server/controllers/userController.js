@@ -43,33 +43,8 @@ class UserController {
       });
     };
     
-    GetAllUsers(req, res) {
-      const allusers = User.users;
-      if (allusers.length <= 0) {
-        return res.status(status.NOT_FOUND).send({
-          status: status.NOT_FOUND,
-          message: 'No users found',
-        });
-      }
-      return res.status(status.REQUEST_SUCCEDED).send({
-        status: status.REQUEST_SUCCEDED,
-        data: allusers,
-      });
-    }
-
-    GetSpecificUser(req, res) {
-      const singleUser = User.users.find((user) => user.id == req.params.id);
-      if (!singleUser) {
-        return res.status(status.NOT_FOUND).send({
-          status: status.NOT_FOUND,
-          error: 'User not found',
-        });
-      }
-      return res.status(status.REQUEST_SUCCEDED).send({
-        status: status.REQUEST_SUCCEDED,
-        data: singleUser,
-      });
-    }
+    
+  
 
     ChangeUserToMentor(req, res) {
       const user = User.users.find((user) => user.id == req.params.id);
@@ -94,30 +69,7 @@ class UserController {
       });
     }
 
-    deleteUser(req, res) {
-      const currentuserUser = User.users.find((user) => user.id == req.params.id);
-      if (!currentuserUser) {
-        return res.status(status.NOT_FOUND).send({
-          status: status.NOT_FOUND,
-          error: 'Not Found',
-        });
-      }
-      const indexOfCurrentuserUser = User.users.indexOf(currentuserUser);
-      if (indexOfCurrentuserUser > -1) {
-        const removeOne = User.users.splice(indexOfCurrentuserUser, 1);
-        if (removeOne) {
-          return res.status(status.REQUEST_SUCCEDED).send({
-            status: status.REQUEST_SUCCEDED,
-            message: 'Successfully Deleted a User',
-          });
-        }
-      }
-
-      return res.status(status.BAD_REQUEST).send({
-        status: status.BAD_REQUEST,
-        err: 'Unable to delete',
-      });
-    }
+    
 
     getAllMentors(req, res) {
       const allMentors = User.users.filter((user) => user.is_mentor == true);
