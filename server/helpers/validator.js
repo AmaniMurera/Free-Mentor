@@ -8,7 +8,7 @@ class Validator {
   };
 
   // SignUp validator fn
-  validateSignUpRequest = (request) => {
+  validateSignUpRequest= (request) => {
     const schema = {
       first_name: Joi.string().required(),
       last_name: Joi.string().required(),
@@ -34,7 +34,14 @@ class Validator {
   };
 
  
-
+ // Mentorship Request Validator fn
+ validateMentorShipRequest = (request) => {
+  const schema = {
+    mentorId: Joi.number().required(),
+    questions: Joi.string().required(),
+  };
+  return this.validate(request, schema);
+};
 
 }
 
