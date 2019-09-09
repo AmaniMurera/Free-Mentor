@@ -408,6 +408,7 @@ input:hover, input:active , textarea:hover, textarea:active{
     /* flex-grow: 1; */
     margin-left: 5%;
     height:34.31px;
+    background: #E9E9E9;
   
 }
 .search-form {
