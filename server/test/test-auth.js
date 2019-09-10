@@ -1,355 +1,150 @@
+
+
 import chai from 'chai';
+
 import chaiHttp from 'chai-http';
+
+import Model from '../models/db';
+
 import app from '../index';
 
+import status from '../helpers/StatusCode';
+
+import users from '../models/users';
 
 const { expect } = chai;
+
 chai.use(chaiHttp);
-chai.should();
 
-const corret_user = {
-  first_name: 'kevin',
-  last_name: 'Murera',
-  email: 'amani@gmail.com',
-  password: 'amanmurerakigali',
-  address: 'kigali',
-  bio: 'engineer',
-  occupation: 'engineer',
-  expertise: 'software',
-};
-const { email } = corret_user;
 
-describe('Authentication testss', () => {
-  
-  it('Should not be able to sign up when email is invalid', (done) => {
-    chai.request(app).post('/api/v1/auth/signup').send({
+// Let's first grab the faked user info
+const fname = users[0].first_name;
+const lname = users[0].last_name;
+const { email } = users[0];
+let token;
 
-      first_name: 'murera',
-      last_name: 'kevin',
-      email: 'aman$$n.doegmail',
-      password: 'kigalikigali',
-      address: 'kigali',
-      bio: 'engineer',
-      occupation: 'engineer',
-      expertise: 'engineer',
-    })
-      .end((err, res) => {
-        expect(res.body).to.be.an('object');
-        expect(res.status).to.equal(400);
-        expect(res.body.status).to.equal(400);
-        done();
-      });
-  });
-  it('Should not be able to signup when email is empty', (done) => {
-    chai.request(app).post('/api/v1/auth/signup').send({
-      first_name: 'kimenyi',
-      last_name: 'kevin',
-      email: '',
-      password: 'kigalikigali',
-      address: 'kigali',
-      bio: 'engineer',
-      occupation: 'engineer',
-      expertise: 'engineer',
-    })
-      .end((err, res) => {
-        expect(res.body).to.be.an('object');
-        expect(res.status).to.equal(400);
-        expect(res.body.status).to.equal(400);
-        expect(res.body.error).to.be.an('String');
-        done();
-      });
-  });
- 
-  it('Should not be able to signup when firstName is empty ', (done) => {
-    chai.request(app)
-      .post('/api/v1/auth/signup')
-      .set('Accept', 'application/json')
-      .send(
-        {
-          first_name: '',
-          last_name: 'kevin',
-          email: 'amani@gmail.com',
-          password: 'kigalikigali',
-          address: 'kigali',
-          bio: 'engineer',
-          occupation: 'engineer',
-          expertise: 'engineer',
-        },
-      )
-      .end((err, res) => {
-        expect(res.body).to.be.an('object');
-        expect(res.status).to.equal(400);
-        expect(res.body.status).to.equal(400);
-        expect(res.body.error).to.be.an('String');
-        done();
-      });
-  });
+// ############ SIGNUP TEST ############
 
-  it('Should not be able to signup when lastName is empty ', (done) => {
+// Test signup for the user
+describe('POST sign up with whitespaced first_name, api/v2/auth/signup', () => {
+  it('should return an error', (done) => {
     chai.request(app)
-      .post('/api/v1/auth/signup')
+      .post('/api/v2/auth/signup')
       .set('Accept', 'application/json')
-      .send(
-        {
-          first_name: 'kevin',
-          last_name: '',
-          email: 'amani@gmail.com',
-          password: 'kigalikigali',
-          address: 'kigali',
-          bio: 'engineer',
-          occupation: 'engineer',
-          expertise: 'engineer',
-        },
-      )
+      .send(users[10])
       .end((err, res) => {
         expect(res.body).to.be.an('object');
-        expect(res.status).to.equal(400);
-        expect(res.body.status).to.equal(400);
-        done();
-      });
-  });
-  
-  it('Should not be able to signup when password length is less than 8 character', (done) => {
-    chai.request(app)
-      .post('/api/v1/auth/signup')
-      .set('Accept', 'application/json')
-      .send(
-        {
-          first_name: 'kevin',
-          last_name: 'Murera',
-          email: 'amani@gmail.com',
-          password: 'aman',
-          address: 'kigali',
-          bio: 'engineer',
-          occupation: 'engineer',
-          expertise: 'engineer',
-        },
-      )
-      .end((err, res) => {
-        expect(res.body).to.be.an('object');
-        expect(res.status).to.equal(400);
-        expect(res.body.status).to.equal(400);
-        done();
-      });
-  });
- 
-  it('should not be able to signup when address is empty', (done) => {
-    chai.request(app)
-      .post('/api/v1/auth/signup')
-      .set('Accept', 'application/json')
-      .send(
-        {
-          first_name: 'kevin',
-          last_name: 'Murera',
-          email: 'amani@gmail.com',
-          password: 'amanmurerakigali',
-          address: '',
-          bio: 'engineer',
-          occupation: 'engineer',
-          expertise: 'engineer',
-        },
-      )
-      .end((err, res) => {
-        expect(res.body).to.be.an('object');
-        expect(res.status).to.equal(400);
-        expect(res.body.status).to.equal(400);
-        done();
-      });
-  });
- 
-  it('should not be able to signup when bio is empty', (done) => {
-    chai.request(app)
-      .post('/api/v1/auth/signup')
-      .set('Accept', 'application/json')
-      .send(
-        {
-          first_name: 'kevin',
-          last_name: 'Murera',
-          email: 'amani@gmail.com',
-          password: 'amanmurerakigali',
-          address: 'kigali',
-          bio: '',
-          occupation: 'engineer',
-          expertise: 'engineer',
-        },
-      )
-      .end((err, res) => {
-        expect(res.body).to.be.an('object');
-        expect(res.status).to.equal(400);
-        expect(res.body.status).to.equal(400);
-        done();
-      });
-  });
- 
-  it('should not be able to signup when occupation is empty', (done) => {
-    chai.request(app)
-      .post('/api/v1/auth/signup')
-      .set('Accept', 'application/json')
-      .send(
-        {
-          first_name: 'kevin',
-          last_name: 'Murera',
-          email: 'amani@gmail.com',
-          password: 'amanmurerakigali',
-          address: 'kigali',
-          bio: 'engineer',
-          occupation: '',
-          expertise: 'engineer',
-        },
-      )
-      .end((err, res) => {
-        expect(res.body).to.be.an('object');
-        expect(res.status).to.equal(400);
-        expect(res.body.status).to.equal(400);
-        done();
-      });
-  });
- 
-  it('should not be able to signup when expertise is empty', (done) => {
-    chai.request(app)
-      .post('/api/v1/auth/signup')
-      .set('Accept', 'application/json')
-      .send(
-        {
-          first_name: 'kevin',
-          last_name: 'Murera',
-          email: 'amani@gmail.com',
-          password: 'amanmurerakigali',
-          address: 'kigali',
-          bio: 'engineer',
-          occupation: 'engineer',
-          expertise: '',
-        },
-      )
-      .end((err, res) => {
-        expect(res.body).to.be.an('object');
-        expect(res.status).to.equal(400);
-        expect(res.body.status).to.equal(400);
-        done();
-      });
-  });
-  
-  it('should not be able to signup when details is incomplete', (done) => {
-    chai.request(app)
-      .post('/api/v1/auth/signup')
-      .set('Accept', 'application/json')
-      .send(
-        {
-
-          last_name: 'Murera',
-          email: 'amani@gmail.com',
-          password: 'amanmurerakigali',
-          address: 'kigali',
-          bio: 'engineer',
-          occupation: 'engineer',
-          expertise: 'software',
-        },
-      )
-      .end((err, res) => {
-        expect(res.body).to.be.an('object');
-        expect(res.status).to.equal(400);
-        expect(res.body.error).to.equal('"first_name" is required');
-        done();
-      });
-  });
-
-  it('should be able to signup when all details are correct', (done) => {
-    chai.request(app)
-      .post('/api/v1/auth/signup')
-      .set('Accept', 'application/json')
-      .send(
-        corret_user,
-      )
-      .end((err, res) => {
-        expect(res.body).to.be.an('object');
-        expect(res.status).to.equal(201);
-        expect(res.body.status).to.equal(201);
-        expect(res.body.data.token).to.be.a('string');
-        expect(res.body.data.id).to.be.a('number');
-        expect(res.body.message).to.equal('User successfully signed up');
-        done();
-      });
-  });
-  
-  it('should not be able to signup when email is already taken', (done) => {
-    chai.request(app)
-      .post('/api/v1/auth/signup')
-      .set('Accept', 'application/json')
-      .send(
-        corret_user,
-      )
-      .end((err, res) => {
-        expect(res.body).to.be.an('object');
-        expect(res.status).to.equal(409);
-        res.body.should.have.property('error');
-        done();
-      });
-  });
-
-  it('should logged in a user when he provide valid credientials', (done) => {
-    chai.request(app)
-      .post('/api/v1/auth/signin')
-      .set('Accept', 'application/json')
-      .send({
-        email: 'amani@gmail.com',
-        password: 'amanmurerakigali',
-      })
-      .end((err, res) => {
-        expect(res.body).to.be.an('object');
-        expect(res.body.status).to.equal(200);
-        expect(res.body.data.token).to.be.a('string');
-        expect(res.body.message).to.equal('User successfully signed in');
-        expect(res.body.data).to.be.an('object');
-        done();
-      });
-  });
- 
-  it('shoud not be able to sign in when passowrd is wrong ', (done) => {
-    chai.request(app)
-      .post('/api/v1/auth/signin')
-      .set('Accept', 'application/json')
-      .send({
-        email: 'amani@gmail.com',
-        password: 'Murera',
-      })
-      .end((err, res) => {
-        expect(res.body).to.be.an('object');
-        expect(res.body.status).to.equal(401);
-        expect(res.body.error).to.equal('email or password is incorrect!');
-        done();
-      });
-  });
- 
-  it('should not be able to sign in when email is empty', (done) => {
-    chai.request(app)
-      .post('/api/v1/auth/signin')
-      .set('Accept', 'application/json')
-      .send(
-        {
-          email: '',
-          password: 'amanmurerakigali',
-        },
-      )
-      .end((err, res) => {
-        expect(res.body).to.be.an('object');
-        expect(res.body.status).to.equal(400);
-        done();
-      });
-  });
- 
-  it('should not be able to sign in when email is not correct', (done) => {
-    chai.request(app)
-      .post('/api/v1/auth/signin')
-      .set('Accept', 'application/json')
-      .send({
-        email: 'amani88888@gmail.com',
-        password: 'amanmurerakigali',
-      })
-      .end((err, res) => {
-        expect(res.body).to.be.an('object');
-        expect(res.body.status).to.equal(401);
-        expect(res.body.error).to.equal('email or password is incorrect!');
+        expect(res.status).to.equal(status.BAD_REQUEST);
+        expect(res.body.status).to.equal(status.BAD_REQUEST);
         done();
       });
   });
 });
+
+describe('POST sign up with whitespaced last_name, api/v2/auth/signup', () => {
+  it('should return an error', (done) => {
+    chai.request(app)
+      .post('/api/v2/auth/signup')
+      .set('Accept', 'application/json')
+      .send(users[11])
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
+        expect(res.status).to.equal(status.BAD_REQUEST);
+        expect(res.body.status).to.equal(status.BAD_REQUEST);
+        done();
+      });
+  });
+});
+describe('POST sign up with whitespaced password, api/v2/auth/signup', () => {
+  it('should return an error', (done) => {
+    chai.request(app)
+      .post('/api/v2/auth/signup')
+      .set('Accept', 'application/json')
+      .send(users[12])
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
+        expect(res.status).to.equal(status.BAD_REQUEST);
+        expect(res.body.status).to.equal(status.BAD_REQUEST);
+        done();
+      });
+  });
+});
+describe('POST sign up successfully, api/v2/auth/signup', () => {
+  it('should return signup successful', (done) => {
+    chai.request(app)
+      .post('/api/v2/auth/signup')
+      .set('Accept', 'application/json')
+      .send(users[0])
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
+        
+        done();
+      });
+  });
+});
+
+// Test for email existance
+describe('POST email already exist, api/v2/auth/signup', () => {
+  it('should return {email} already exists', (done) => {
+    chai.request(app)
+      .post('/api/v2/auth/signup')
+      .set('Accept', 'application/json')
+      .send(users[0])
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
+
+        done();
+      });
+  });
+});
+
+// Test for short password
+describe('POST sign up with short password api/v2/auth/signup', () => {
+  it('should return error when user entered short password', (done) => {
+    chai.request(app)
+      .post('/api/v2/auth/signup')
+      .set('Accept', 'application/json')
+      .send(users[4])
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
+        expect(res.status).to.equal(status.BAD_REQUEST);
+        expect(res.body.error).to.equal('"password" length must be at least 8 characters long');
+        done();
+      });
+  });
+});
+
+// Test for user data incompleteness
+describe('POST sign up with incomplete data api/v2/auth/signup', () => {
+  it('should return error when user signup details is incomplete', (done) => {
+    chai.request(app)
+      .post('/api/v2/auth/signup')
+      .set('Accept', 'application/json')
+      .send(users[3])
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
+        expect(res.status).to.equal(status.BAD_REQUEST);
+        expect(res.body.error).to.equal('"first_name" is required');
+        done();
+      });
+  });
+});
+
+// Test for email validation
+describe('POST sign up with invalid email api/v2/auth/signup', () => {
+  it('should return error when user email is invalid', (done) => {
+    chai.request(app)
+      .post('/api/v2/auth/signup')
+      .set('Accept', 'application/json')
+      .send(users[2])
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
+        expect(res.status).to.equal(status.BAD_REQUEST);
+        expect(res.body.error).to.equal('"email" is required');
+        done();
+      });
+  });
+});
+
+
+// ############ SIGNin TEST ############

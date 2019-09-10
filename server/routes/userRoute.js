@@ -1,22 +1,24 @@
 import express from 'express';
+import admin from '../middleware/admin';
+
+import { validSignup, validSignin } from '../middleware/validator';
 import UserController from '../controllers/userController';
-import Authorisation from '../middleware/protect_routes';
 
 const router = express.Router();
-const authorisation = new Authorisation();
+const user_controller = new UserController()
 
-const user_controller = new UserController();
+const { retrieveAllUsers, signup, signin } = UserController;
 
-router.post('/signup', user_controller.signUp);
-router.post('/signin', user_controller.signIn);
-
-
+router.post('/signup', validSignup, signup);
+// router.post('/signin', validSignin, signIn);
 
 
 
-router.patch('/:id', authorisation.checkAdmin, user_controller.ChangeUserToMentor);
 
-router.get('/', authorisation.checkUser, user_controller.getAllMentors);
 
-router.get('/:id', authorisation.checkUser , user_controller.GetOneMentor);
+router.patch('/:id', user_controller.ChangeUserToMentor);
+
+router.get('/', user_controller.getAllMentors);
+
+router.get('/:id', user_controller.GetOneMentor);
 export default router;

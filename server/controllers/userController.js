@@ -1,50 +1,115 @@
-import User from '../models/userModel';
+import generateAuthToken from '../helpers/tokens';
+import Model from '../models/db';
+import hashPassword from '../helpers/hashPassword';
 import status from '../helpers/StatusCode';
-import Validator from '../helpers/validator';
 
 
 class UserController {
-    signUp = (req, res) => {
-      const result = Validator.validateSignUpRequest(req.body);
-      if (result.error == null) {
-        if (User.isEmailTaken(req.body.email)) {
-          
-          return res.status(status.REQUEST_CONFLICT).send({
+  static model() {
+    return new Model('users');
+  }
+
+  static retrieveAllUsers = async (req, res) => {
+    try {
+      const rows = await this.model().select('user_id, email, first_name, last_name, is_admin');
+      // If no users are registered
+      if (rows.length === 0) {
+        return res.status(400).json({
+          status: status.NOT_FOUND,
+          error: 'No user found',
+        });
+      }
+      // If all users have been retrieved
+      return res.status(200).json({
+        status: status.REQUEST_SUCCEDED,
+        message: 'All users are retrived successfully',
+        data: rows,
+
+      });
+    } catch (e) {
+      // Catch any error if it rises
+      return res.status(status.SERVER_ERROR).json({
+        status: status.SERVER_ERROR,
+        error: 'server error',
+       
+      });
+    }
+  }
+
+    static signup = async (req, res) => {
+      try {
+        let {
+          first_name,
+          last_name,
+          email,
+          password,
+          address,
+          bio,
+          expertise,
+          occupation,
+          is_admin,
+          is_mentor,
+
+        } = req.body;
+
+        // Generate a unique ID
+        // Check if Email already exist
+        const user = await this.model().select('*', 'email=$1', [email]);
+        if (user[0]) {
+          // Catch any error if it rises
+          return res.status(status.REQUEST_CONFLICT).json({
             status: status.REQUEST_CONFLICT,
-            error: `${req.body.email} is already taken!,try another email.`,
+            error: `${email} already exists`,
+
           });
         }
-       const user = User.create(req.body);
-        return res.status(status.RESOURCE_CREATED).send(user);
+        // Hash user password before being stored
+        password = await hashPassword.encryptPassword(password);
+        // console.log(password);
+        const cols = 'first_name, last_name, email, password, address, bio ,expertise, occupation, is_admin, is_mentor';
+        
+        const sels = `'${first_name}', '${last_name}', '${email}', '${password}', '${address}', '${bio}','${expertise}','${occupation}', '${is_admin}', '${is_mentor}'`;
+        const rows = await this.model().insert(cols, sels);
+
+
+        let token = generateAuthToken(rows[0].user_id, rows[0].is_admin);
+
+        return res.status(status.RESOURCE_CREATED).json({
+          status: status.RESOURCE_CREATED,
+          message: 'User signed up successfully',
+          token,
+        });
+        // });
+      } catch (e) {
+        // Catch any error if it rises
+        return res.status(500).json({
+          status: status.SERVER_ERROR,
+          error: 'server error',
+          
+        });
       }
-      
-      return res.status(status.BAD_REQUEST).send({
-        status: status.BAD_REQUEST,
-        error: `${result.error.details[0].message}`,
-      });
-    };
+    }
 
     signIn = (req, res) => {
       const result = Validator.validateSignInRequest(req.body);
       if (result.error == null) {
-      
         const user = User.login(req.body);
         if (user.status === status.REQUEST_SUCCEDED) {
           res.set('x-auth-token', user.data.token);
           return res.status(status.REQUEST_SUCCEDED).send(user);
         }
-        
+
         return res.status(status.UNAUTHORIZED).send(user);
       }
-      
+
       return res.status(status.BAD_REQUEST).send({
         status: status.BAD_REQUEST,
         error: `${result.error.details[0].message}`,
       });
     };
-    
-    
-  
+
+
+
 
     ChangeUserToMentor(req, res) {
       const user = User.users.find((user) => user.id == req.params.id);
@@ -69,7 +134,6 @@ class UserController {
       });
     }
 
-    
 
     getAllMentors(req, res) {
       const allMentors = User.users.filter((user) => user.is_mentor == true);
