@@ -90,22 +90,32 @@ class UserController {
       }
     }
 
-    signIn = (req, res) => {
-      const result = Validator.validateSignInRequest(req.body);
-      if (result.error == null) {
-        const user = User.login(req.body);
-        if (user.status === status.REQUEST_SUCCEDED) {
-          res.set('x-auth-token', user.data.token);
-          return res.status(status.REQUEST_SUCCEDED).send(user);
+    static signin = async (req, res) => {
+      try {
+        const { email, password } = req.body;
+        const data = await this.model().select('*', 'email=$1', [email]);
+        //  If user credentials are correct
+        if (data[0] && hashPassword.decryptPassword(password, data[0].password)) {
+          const token = generateAuthToken(data[0].user_id, data[0].is_admin);
+          return res.status(status.REQUEST_SUCCEDED).json({
+            status: status.REQUEST_SUCCEDED,
+            message: 'user signed in successfully',
+            token,
+          });
         }
-
-        return res.status(status.UNAUTHORIZED).send(user);
+        // If no user is found with provided inputs
+        return res.status(status.UNAUTHORIZED).json({
+          status: status.UNAUTHORIZED,
+          error: 'Invalid Email or Password',
+        });
+      } catch (e) {
+        // Catch any error if it rises
+        return res.status(status.SERVER_ERROR).json({
+          status: status.SERVER_ERROR,
+          error: 'server error',
+          // e,
+        });
       }
-
-      return res.status(status.BAD_REQUEST).send({
-        status: status.BAD_REQUEST,
-        error: `${result.error.details[0].message}`,
-      });
     };
 
 

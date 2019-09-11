@@ -10,7 +10,7 @@ const users = [
   {
     first_name: 'manaiii',
     last_name: 'kevin',
-    email: faker_mail,
+    email: 'amanimurera@gmail.com',
     password: 'kigalikigali',
     address: 'kigali',
     bio: 'engineer',
@@ -54,9 +54,14 @@ const users = [
 
   // ############# Signin users ################
   // 5 Correct registered credentials
+  // {
+  //   email: faker_mail,
+  //   password: faker_password,
+  // },
+
   {
-    email: faker_mail,
-    password: faker_password,
+    email: 'amanimurera@gmail.com',
+    password: 'kigalikigali',
   },
   // 6 Incorrect password
   {
