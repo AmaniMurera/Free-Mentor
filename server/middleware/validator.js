@@ -39,3 +39,18 @@ export const validSignup = (req, res, next) => {
 
   next();
 };
+
+export const validSignin = async (req, res, next) => {
+  // validation of Request payload
+  // using JOI npm
+  const schema = {
+    email: Joi.string().email().required(),
+    password: Joi.required(),
+  };
+  const result = Joi.validate(req.body, schema);
+  if (result.error === null) {
+    next();
+    return;
+  }
+  return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: `${result.error.details[0].message}` });
+};

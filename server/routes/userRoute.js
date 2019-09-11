@@ -10,7 +10,7 @@ const user_controller = new UserController()
 const { retrieveAllUsers, signup, signin } = UserController;
 
 router.post('/signup', validSignup, signup);
-// router.post('/signin', validSignin, signIn);
+router.post('/signin', validSignin, signin);
 
 
 
