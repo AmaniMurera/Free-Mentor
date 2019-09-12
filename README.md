@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/murera/Free-Mentor.svg?branch=develop)](https://travis-ci.org/murera/Free-Mentor) [![Coverage Status](https://coveralls.io/repos/github/murera/Free-Mentor/badge.svg?branch=develop)](https://coveralls.io/github/murera/Free-Mentor?branch=develop)  [![Maintainability](https://api.codeclimate.com/v1/badges/be19534b73ff5410ec2c/maintainability)](https://codeclimate.com/github/murera/Free-Mentor/maintainability)
+[![Build Status](https://travis-ci.org/murera/Free-Mentor.svg?branch=develop)](https://travis-ci.org/murera/Free-Mentor) [![Coverage Status](https://coveralls.io/repos/github/murera/Free-Mentor/badge.svg?branch=ch-update-readme-68235642)](https://coveralls.io/github/murera/Free-Mentor?branch=ch-update-readme-68235642)  [![Maintainability](https://api.codeclimate.com/v1/badges/be19534b73ff5410ec2c/maintainability)](https://codeclimate.com/github/murera/Free-Mentor/maintainability)
 
 # Free-Mentor
 
