@@ -1,14 +1,18 @@
 import jwt from 'jsonwebtoken';
-import status from './StatusCode';
 
-const getUserId = (res, token) => {
-  
+export const getUserId = (token) => {
   try {
     const decoded = jwt.verify(token, process.env.Token_Key);
-    return decoded.id;
+    return decoded.Id;
   } catch (error) {
-    return res.status(status.BAD_REQUEST).send({ status: 400, error: error.message });
+    return null;
   }
 };
-
-export default getUserId;
+export const getUserEmail = (toke) => {
+  try {
+    const decoded = jwt.verify(token, process.env.Token_Key);
+    return decoded.userEmail;
+  } catch (error) {
+    return null;
+  }
+};

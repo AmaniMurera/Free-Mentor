@@ -1,7 +1,9 @@
+import lodash from 'lodash';
 import generateAuthToken from '../helpers/tokens';
 import Model from '../models/db';
 import hashPassword from '../helpers/hashPassword';
 import status from '../helpers/StatusCode';
+import response from '../helpers/responseHandler';
 
 
 class UserController {
@@ -31,7 +33,7 @@ class UserController {
       return res.status(status.SERVER_ERROR).json({
         status: status.SERVER_ERROR,
         error: 'server error',
-       
+
       });
     }
   }
@@ -67,12 +69,12 @@ class UserController {
         password = await hashPassword.encryptPassword(password);
         // console.log(password);
         const cols = 'first_name, last_name, email, password, address, bio ,expertise, occupation, is_admin, is_mentor';
-        
+
         const sels = `'${first_name}', '${last_name}', '${email}', '${password}', '${address}', '${bio}','${expertise}','${occupation}', '${is_admin}', '${is_mentor}'`;
         const rows = await this.model().insert(cols, sels);
 
 
-        let token = generateAuthToken(rows[0].user_id, rows[0].is_admin);
+        let token = generateAuthToken(rows[0].user_id, rows[0].email, rows[0].is_mentor, rows[0].is_admin);
 
         return res.status(status.RESOURCE_CREATED).json({
           status: status.RESOURCE_CREATED,
@@ -85,7 +87,7 @@ class UserController {
         return res.status(500).json({
           status: status.SERVER_ERROR,
           error: 'server error',
-          
+
         });
       }
     }
@@ -119,68 +121,63 @@ class UserController {
     };
 
 
+    // CHANGE USER TO A MENTOR
+  static change_mentor = async (req, res) => {
+    const userId = req.params.id;
+    console.log(req.params);
+    const user = await this.model().select('*', 'user_id=$1', [userId]);
+    if (!user[0]) {
+      return response.errorMessage(req, res, `No user available with id ${userId}`, status.NOT_FOUND, 'error');
+    }
+    if (user[0].is_mentor === true) {
+      return response.errorMessage(req, res, 'already a mentor', status.NOT_FOUND, 'error');
+    }
+    await this.model().update('is_mentor=$1', 'user_id= $2', [true, user[0].user_id]);
+    const ismentor = !user[0].is_mentor;
+    const data = {
+      ismentor,
+    };
+    return response.successMessage(req, res, 'User changed to a mentor successfully', status.REQUEST_SUCCEDED, data);
+  }
 
 
-    ChangeUserToMentor(req, res) {
-      const user = User.users.find((user) => user.id == req.params.id);
-      if (!user) {
-        return res.status(status.NOT_FOUND).send({
-          status: status.NOT_FOUND,
-          error: 'User not found',
-        });
-      }
-      if (user.is_mentor === true) {
-        return res.status(status.BAD_REQUEST).send({ status: status.BAD_REQUEST, error: 'User is already a mentor' });
-      }
-      user.is_mentor = true;
+  // GET ALL MENTORS
+  static AllMentors = async (req, res) => {
+    const mentors = [];
+    const is_mentor = true;
+    const mentor = await this.model().select('*', 'is_mentor=$1', [is_mentor]);
+    for (let item = 0; item < mentor.length; item += 1) {
+      mentors.push(lodash.pick(mentor[item],
+        ['user_id', 'first_name', 'last_name', 'email',
+          'address', 'bio', 'occupation', 'expertise']));
+    }
+    if (mentors.length <= 0) {
+      return response.errorMessage(req, res, 'No available mentors', status.NOT_FOUND, 'error');
+    }
+    const data = {
+      mentors,
+    };
+    return response.successMessage(req, res, 'succeed', status.REQUEST_SUCCEDED, data);
+  }
 
-      return res.status(status.REQUEST_SUCCEDED).send({
-        status: status.REQUEST_SUCCEDED,
-        data: {
-          message: 'user successfully changed to mentor',
-          user,
-
-        },
+  static specificMentor = async (req, res) => {
+    const mentorId = req.params.id;
+    // notNumber(mentorId, res);
+    const userStatus = true;
+    let mentor = await this.model().select('*', 'user_id=$1 AND is_mentor=$2', [mentorId, userStatus]);
+    if (!mentor[0]) {
+      return res.status(status.NOT_FOUND).send({
+        status: status.NOT_FOUND,
+        error: `Mentor with this Id ${mentorId} does not exist`,
       });
     }
+    return res.status(status.REQUEST_SUCCEDED).send({
+      status: status.REQUEST_SUCCEDED,
+      message: `More informtion about user with id ${mentorId} are:`,
+      data: lodash.pick(mentor[0], 'user_id', 'first_name', 'last_name', 'email', 'address', 'bio', 'occupation', 'expertise'),
+    });
+  }
 
-
-    getAllMentors(req, res) {
-      const allMentors = User.users.filter((user) => user.is_mentor == true);
-      if (allMentors.length < 1) {
-        return res.status(status.NOT_FOUND).send({
-          status: status.NOT_FOUND,
-          message: 'mentors are not available',
-        });
-      }
-
-      return res.status(status.REQUEST_SUCCEDED).send({
-        status: status.REQUEST_SUCCEDED,
-        data: allMentors,
-      });
-    }
-
-    GetOneMentor(req, res) {
-      const allMentors = User.users.filter((user) => user.is_mentor == true);
-      if (allMentors.length < 1) {
-        return res.status(status.NOT_FOUND).send({
-          status: status.NOT_FOUND,
-          message: 'mentors are not available',
-        });
-      }
-
-      const specificMentor = allMentors.find((user) => user.id == req.params.id);
-      if (!specificMentor) {
-        return res.status(status.NOT_FOUND).send({
-          status: status.NOT_FOUND,
-          error: 'No mentor found',
-        });
-      }
-      return res.status(status.REQUEST_SUCCEDED).send({
-        status: status.REQUEST_SUCCEDED,
-        data: specificMentor,
-      });
-    }
 }
 
 
