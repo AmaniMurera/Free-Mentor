@@ -1,9 +1,7 @@
 import jwt from 'jsonwebtoken';
 
-const generateAuthToken = (id, userEmail, admin, mentor) => {
-  const token = jwt.sign({
-    id, email: userEmail, is_mentor: mentor, is_admin: admin,
-  }, 'process.env.secretKey');
+const generateAuthToken = (id, admin, mentor) => {
+  const token = jwt.sign({ id, is_admin: admin, is_mentor: mentor }, process.env.Token_Key);
   return token;
 };
 

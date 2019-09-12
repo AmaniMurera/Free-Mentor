@@ -74,7 +74,7 @@ class UserController {
         const rows = await this.model().insert(cols, sels);
 
 
-        let token = generateAuthToken(rows[0].user_id, rows[0].email, rows[0].is_mentor, rows[0].is_admin);
+        let token = generateAuthToken(rows[0].user_id,rows[0].is_admin);
 
         return res.status(status.RESOURCE_CREATED).json({
           status: status.RESOURCE_CREATED,
