@@ -1,13 +1,14 @@
 import express from 'express';
-// import SessionController from '../controllers/session_controller';
-// import Authorisation from '../middleware/protect_routes';
+// import sessionController from '../controllers/sessionController';
+// import { validcreateSession} from '../middleware/sessionValidator';
 
-// const authorise = new Authorisation();
+// import reviewController from '../controllers/reviewController';
+import Auth from '../middleware/verifyAdmin'
 
 const router = express.Router();
 
 
-// router.post('/', authorise.checkUser, SessionController.create);
+//  router.post('/', validcreateSession, sessionController.SessionController.createSession);
 
 
 // router.get('/', authorise.checkMentor, SessionController.mentorViewAllSessionRequests);
