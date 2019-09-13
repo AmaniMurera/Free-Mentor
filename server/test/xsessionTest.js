@@ -1,14 +1,14 @@
-
 import chai from 'chai';
 
 import chaiHttp from 'chai-http';
+
+import status from '../helpers/StatusCode';
 
 import app from '../index';
 
 import users from '../models/users';
 
 import sessions from '../models/sessions';
-import status from '../helpers/StatusCode';
 
 import generateToken from '../helpers/tokens';
 

@@ -1,13 +1,12 @@
 
-
 import chai from 'chai';
 
 import chaiHttp from 'chai-http';
 
 import app from '../index';
+import status from '../helpers/StatusCode';
 
 import users from '../models/users';
-import status from '../helpers/StatusCode';
 
 
 const { expect } = chai;
@@ -15,6 +14,7 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 const { email } = users[0];
+
 let token;
 
 
