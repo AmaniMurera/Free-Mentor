@@ -8,7 +8,7 @@ export const getUserId = (token) => {
     return null;
   }
 };
-export const getUserEmail = (toke) => {
+export const getUserEmail = (token) => {
   try {
     const decoded = jwt.verify(token, process.env.Token_Key);
     return decoded.userEmail;

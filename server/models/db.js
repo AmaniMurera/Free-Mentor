@@ -11,7 +11,7 @@ class Model {
     });
 
     this.pool.on('error', (err, client) => {
-      console.log('freementor-db-db-error: ', err);
+      console.log('freeMentors-db-error: ', err);
     });
   }
 
