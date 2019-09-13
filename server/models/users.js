@@ -8,60 +8,66 @@ const users = [
 
   // 0 Correct user info
   {
-    first_name: 'manaiii',
-    last_name: 'kevin',
-    email: 'amanimurera@gmail.com',
-    password: 'kigalikigali',
-    address: 'kigali',
-    bio: 'engineer',
-    occupation: 'engineer',
-    expertise: 'engineer',
-    s_admin: 'true',
-    is_mentor: false,
+    email: 'faker_mail@gmail.com',
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    password: faker_password,
+    address: faker.address.streetAddress(),
+    occupation: faker.name.jobTitle(),
+    expertise: faker.name.jobDescriptor(),
+    bio: 'lorem ipsum lami peso demi lavita neminkete',
   },
 
   // 1 Correct user info
   {
-    email: faker.internet.email(),
-    first_name: faker.name.firstName(),
-    last_name: faker.name.lastName(),
-    password: faker.internet.password(8, true),
+    email: faker_mail,
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    password: faker_password,
+    adress: faker.address.streetAddress(),
+    occupation: faker.name.jobTitle(),
+    expertise: faker.name.jobDescriptor(),
+    bio: 'lorem ipsum lami peso demi lavita neminkete',
   },
 
   // 2 User with invalid email
   {
     email: faker.name.lastName,
-    first_name: faker.name.firstName(),
-    last_name: faker.name.lastName(),
-    password: faker.internet.password(8, true),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    password: faker_password,
+    adress: faker.address.streetAddress(),
+    occupation: faker.name.jobTitle(),
+    expertise: faker.name.jobDescriptor(),
+    bio: 'lorem ipsum lami peso demi lavita neminkete',
   },
 
   // 3 User with incomplete info
   {
     email: faker.internet.email(),
-    last_name: faker.name.lastName(),
+    lastName: faker.name.lastName(),
     password: faker.internet.password(8, true),
   },
 
   // 4 User with incomplte password
   {
-    email: faker.internet.email(),
-    first_name: faker.name.firstName(),
-    last_name: faker.name.lastName(),
     password: faker.internet.password(3, true),
+    email: faker_mail,
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    adress: faker.address.streetAddress(),
+    occupation: faker.name.jobTitle(),
+    expertise: faker.name.jobDescriptor(),
+    bio: 'lorem ipsum lami peso demi lavita neminkete',
+
   },
 
 
-  // ############# Signin users ################
+  // ####### Signin users ########
   // 5 Correct registered credentials
-  // {
-  //   email: faker_mail,
-  //   password: faker_password,
-  // },
-
   {
-    email: 'amanimurera@gmail.com',
-    password: 'kigalikigali',
+    email: 'mujohn68@gmail.com',
+    password: '0785571790',
   },
   // 6 Incorrect password
   {
@@ -84,24 +90,50 @@ const users = [
   },
   // 10 first name with whitespace
   {
-    first_name: ' ',
-    last_name: faker.name.lastName(),
-    email: faker.internet.email(),
+    firstName: ' ',
+    email: faker_mail,
+    lastName: faker.name.lastName(),
     password: faker_password,
+    adress: faker.address.streetAddress(),
+    occupation: faker.name.jobTitle(),
+    expertise: faker.name.jobDescriptor(),
+    bio: 'lorem ipsum lami peso demi lavita neminkete',
   },
   // 11 last name with whitespace
   {
-    first_name: faker.name.lastName(),
-    last_name: ' ',
-    email: faker.internet.email(),
+    lastName: ' ',
+    email: faker_mail,
+    firstName: faker.name.firstName(),
     password: faker_password,
+    adress: faker.address.streetAddress(),
+    occupation: faker.name.jobTitle(),
+    expertise: faker.name.jobDescriptor(),
+    bio: 'lorem ipsum lami peso demi lavita neminkete',
   },
   // 12 password with whitespace
   {
-    first_name: faker.name.lastName(),
-    last_name: ' ',
-    email: faker.internet.email(),
-    password: faker_password,
+    email: faker_mail,
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    password: ' ',
+    adress: faker.address.streetAddress(),
+    occupation: faker.name.jobTitle(),
+    expertise: faker.name.jobDescriptor(),
+    bio: 'lorem ipsum lami peso demi lavita neminkete',
+  },
+  {
+    email: 'ineza@gmail.com',
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    password: 'yamuremye ',
+    adress: faker.address.streetAddress(),
+    occupation: faker.name.jobTitle(),
+    expertise: faker.name.jobDescriptor(),
+    bio: 'lorem ipsum lami peso demi lavita neminkete',
+  },
+  {
+    email: 'mujohn68@gmail.com',
+    password: '0785571790',
   },
 ];
 export default users;

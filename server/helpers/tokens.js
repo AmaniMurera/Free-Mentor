@@ -1,8 +1,21 @@
 import jwt from 'jsonwebtoken';
 
-const generateAuthToken = (id, admin, mentor) => {
-  const token = jwt.sign({ id, is_admin: admin, is_mentor: mentor }, process.env.Token_Key);
-  return token;
+const Helper = {
+
+  generateToken(id, email, mentor, admin) {
+    const token = jwt.sign({
+      Id: id,
+      userEmail: email,
+      isMentor: mentor,
+      isAdmin: admin,
+    },
+    process.env.Token_Key, { expiresIn: '1d' });
+    return token;
+  },
+
+  verifyToken(token) {
+    return jwt.verify(token, process.env.Token_Key);
+  },
 };
 
-export default generateAuthToken;
+export default Helper;

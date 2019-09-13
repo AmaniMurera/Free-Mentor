@@ -10,36 +10,56 @@ pool.on('error', (err) => {
 
 const createTables = pool.query(`DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users(
-    user_id SERIAL NOT NULL PRIMARY KEY,
-	  first_name VARCHAR NOT NULL,
-    last_name VARCHAR NOT NULL,
-	email VARCHAR NOT NULL,
-  password VARCHAR NOT NULL,
-  address VARCHAR NOT NULL,
-  bio VARCHAR NOT NULL,
-  expertise VARCHAR NOT NULL,
-  occupation VARCHAR NOT NULL,
-  is_admin BOOLEAN  DEFAULT false,
-  is_mentor  BOOLEAN DEFAULT false
-
+    id SERIAL NOT NULL,
+    firstName VARCHAR NOT NULL,
+    lastName VARCHAR NOT NULL,
+    email VARCHAR NOT NULL,
+    password VARCHAR NOT NULL,
+    address VARCHAR NOT NULL,
+    bio VARCHAR NOT NULL,
+    occupation VARCHAR NOT NULL,
+    expertise VARCHAR NOT NULL,
+    ismentor boolean default false,
+    isadmin boolean default false
+    
 );
 INSERT INTO users (
-     first_name, last_name, email, password, address,bio , expertise , occupation, is_admin , is_mentor 
+     firstName, lastName, email, password, address,bio,occupation,expertise,ismentor,isadmin
     ) VALUES (
-         'amani',
-         'Boffin',
-        'amaniboffin@gmail.com',
-        '$2b$10$9DhD.e2mZV/Nma8SEOk.g.F9IJJ17N7IICSeYB8ACrUxXQB20lMjG',
-        'kigali',
-        'enginner',
-        'development',
-        'developer',
-        true,
-        false
+        'munezero',
+        'pacifique',
+        'mujohn68@gmail.com',
+        '$2b$10$d9H69WXJ90JViosDOY8bkux594B2Zu.yo/Y0rVsCcBrw3rT6DtnY6',
+         'kigali',
+         'born in Rwanda',
+         'software engineer',
+         'angular js',
+         true,
+         true
+),(
+  'munezero',
+  'pacifique',
+  'mujohn681@gmail.com',
+  '$2b$10$d9H69WXJ90JViosDOY8bkux594B2Zu.yo/Y0rVsCcBrw3rT6DtnY6',
+   'kigali',
+   'born in Rwanda',
+   'software engineer',
+   'angular js',
+   true,
+   false
+),(
+  'munezero',
+  'pacifique',
+  'mujohn682@gmail.com',
+  '$2b$10$d9H69WXJ90JViosDOY8bkux594B2Zu.yo/Y0rVsCcBrw3rT6DtnY6',
+   'kigali',
+   'born in Rwanda',
+   'software engineer',
+   'angular js',
+   true,
+   true
 );
-
-DROP TABLE IF EXISTS sessions CASCADE;
-CREATE TABLE sessions(
+DROP TABLE IF EXISTS sessions CASCADE;CREATE TABLE sessions(
   sessionId SERIAL NOT NULL,
   mentorid INTEGER NOT NULL,
   questions VARCHAR NOT NULL,
@@ -55,7 +75,6 @@ VALUES(
  'mj06@gmail.com',
  'accepted'
 );
-
 
 `);
 

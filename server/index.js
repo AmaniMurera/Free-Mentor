@@ -1,22 +1,23 @@
-
-import swaggerui from 'swagger-ui-express';
 import express from 'express';
-import bodyParser from 'body-parser';
-import config from './config/default';
+import bodyParse from 'body-parser';
+import dotenv from 'dotenv';
 import status from './helpers/StatusCode';
-import swaggerdocs from '../docs/swaggerdocs.json';
-import routes from './routes/routes';
-import createTable from './models/tableQueries';
+import Route from './routes/route';
 
-// eslint-disable-next-line no-unused-expressions
-// createTable.createTables;
 
+// const swaggerUi = require('swagger-ui-express');
+// const swaggerDocument = require('../swagger.json');
+
+dotenv.config();
 
 const app = express();
-app.use(bodyParser.json());
+app.use(bodyParse.json());
 
-app.use('/api/v2/', routes);
-app.use('/api-docs', swaggerui.serve, swaggerui.setup(swaggerdocs));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+
+app.use('/api/v2', Route);
+
 
 app.use('/', (req, res) => {
   res.status(status.NOT_FOUND).send({
@@ -25,7 +26,7 @@ app.use('/', (req, res) => {
   });
 });
 
-const { port } = config;
-app.listen(port, () => console.log(`server listen on port ${port}...`));
+const port = process.env.PORT || 4000;
 
+app.listen(port, () => console.log(`Listening on port ${port}...`));
 export default app;
