@@ -4,9 +4,9 @@ const faker_mail = faker.internet.email();
 const faker_password = faker.internet.password(8, true);
 const users = [
 
-  // ############# Signup users ################
+  
 
-  // 0 Correct user info
+  
   {
     email: 'faker_mail@gmail.com',
     firstName: faker.name.firstName(),
@@ -63,8 +63,8 @@ const users = [
   },
 
 
-  // ####### Signin users ########
-  // 5 Correct registered credentials
+  
+  
   {
     email: 'mujohn68@gmail.com',
     password: '0785571790',

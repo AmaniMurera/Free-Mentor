@@ -329,10 +329,10 @@ button:hover, .icon:hover, #login-title:hover{
 button a{
     color: whitesmoke;
 }
-/* .primary {
-    background-color: #115674;
-    color: white;
-} */
+
+    
+    
+pa
 .primary{
     text-decoration:none;
 }
@@ -385,7 +385,7 @@ input:hover, input:active , textarea:hover, textarea:active{
 	background-color:#f0f0f0;
 }
 
-/* fix sign in footer to bottom */
+
 
 #page-container {
     
@@ -395,7 +395,7 @@ input:hover, input:active , textarea:hover, textarea:active{
 	justify-content: space-between
   }
    
- /* search bar and filter styles */
+ 
 .example{
     width: 80%;
     max-width: 960px;
